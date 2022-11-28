@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "362017757735",
+    "project_id": "watts-clone",
+    "storage_bucket": "watts-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362017757735:android:4e345b98f82b6b03170c02",
+        "android_client_info": {
+          "package_name": "com.example.watts_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362017757735-hfdtp3f8b37nm104je39cgdgm56taq7c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.watts_clone",
+            "certificate_hash": "4573fafce38320817a738814cf4654e1c96596ff"
+          }
+        },
+        {
+          "client_id": "362017757735-s8plfqr62mnhhmi15pbf1poggfo9e4lq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB098exj9OGWJSOJzyd_ZLYNtDP47jnUsA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362017757735-s8plfqr62mnhhmi15pbf1poggfo9e4lq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
