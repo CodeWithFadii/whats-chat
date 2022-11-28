@@ -6,11 +6,5 @@ const String splash = '/';
 const kloginStyle = TextStyle(
   color: kPrimaryColor,
   fontWeight: FontWeight.bold,
-  fontSize: 40,
-);
-
-const kStyle = TextStyle(
-  color: kPrimaryColor,
-  fontWeight: FontWeight.bold,
-  fontSize: 30,
+  fontSize: 50,
 );
