@@ -8,3 +8,9 @@ const kloginStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 40,
 );
+
+const kStyle = TextStyle(
+  color: kPrimaryColor,
+  fontWeight: FontWeight.bold,
+  fontSize: 30,
+);
