@@ -9,7 +9,20 @@ const listOfFeatures = [
   "Synced",
   "Reliable"
 ];
-
+const drawerTextList = [
+  "Account",
+  "Friends",
+  "Notifications",
+  "Data and Storage",
+  "Help",
+];
+var drawerIconList = <IconData>[
+  Icons.key,
+  Icons.handshake,
+  Icons.notifications,
+  Icons.data_object,
+  Icons.help,
+];
 const appname = "Quick Chats",
     account = "Account",
     weWill = "We will send a message on your number for verification",
@@ -24,3 +37,6 @@ const appname = "Quick Chats",
     cont = "Start Messaging",
     grey = Colors.grey,
     slogan = "join the\nrevolution\ntoday.";
+
+const aboutText =
+    'This is not your username or pin. This name will be visible in your Quick Chats friends.';

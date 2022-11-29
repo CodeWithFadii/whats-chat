@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:watts_clone/consts/strings.dart';
 
-Widget appBarWidget() {
+Widget appBarWidget(GlobalKey<ScaffoldState> key) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 8),
     color: Colors.white,
@@ -9,9 +9,14 @@ Widget appBarWidget() {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Icon(
-          Icons.settings,
-          size: 30,
+        GestureDetector(
+          onTap: () {
+            key.currentState!.openDrawer();
+          },
+          child: const Icon(
+            Icons.settings,
+            size: 30,
+          ),
         ),
         Text.rich(
           TextSpan(

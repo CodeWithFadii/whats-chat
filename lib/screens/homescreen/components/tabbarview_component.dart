@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:watts_clone/screens/homescreen/components/tabbarview/status_component.dart';
 
 import 'tabbarview/chat_component.dart';
 
@@ -11,7 +12,8 @@ Widget tabbarViewWidget() {
           child: chatInfoWidget(),
         ),
         Container(
-          color: Colors.yellow,
+          color: Colors.white,
+          child: statusWidget(),
         ),
         Container(
           color: Colors.green,

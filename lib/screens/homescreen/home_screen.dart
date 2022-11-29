@@ -1,28 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:watts_clone/screens/homescreen/components/drawer_component.dart';
 import 'components/appbar_component.dart';
 import 'components/tabbar_component.dart';
 import 'components/tabbarview_component.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
+    return SafeArea(
+      child: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          key: scaffoldKey,
+          drawer: drawerWidget(),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.grey,
+            onPressed: () {},
+            child: const Icon(
+              Icons.edit,
+              color: Colors.white,
+            ),
           ),
-        ),
-        backgroundColor: Colors.black,
-        body: SafeArea(
-          child: Column(
+          backgroundColor: Colors.black,
+          body: Column(
             children: [
-              appBarWidget(),
+              appBarWidget(scaffoldKey),
               Expanded(
                 child: Column(
                   children: [
