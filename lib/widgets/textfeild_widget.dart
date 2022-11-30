@@ -2,32 +2,33 @@ import 'package:flutter/material.dart';
 
 import '../consts/app_theme.dart';
 
-
 class TextFeildWidget extends StatelessWidget {
+  final String labelText;
   final String hintText;
-  final bool obscureText;
+  final String prefixText;
   final IconData icon;
-  final controller;
-  const TextFeildWidget(
+  final TextInputType textInputType;
+  TextFeildWidget(
       {super.key,
-      required this.controller,
-      this.hintText = 'Phone Number',
-      this.obscureText = false,
-      this.icon = Icons.phone});
+      this.labelText = 'Phone Number',
+      required this.prefixText,
+      this.icon = Icons.phone,
+      required this.hintText,  this.textInputType = TextInputType.name});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 320,
       child: TextField(
-        controller: controller,
-        obscureText: obscureText,
+        keyboardType: textInputType,
         decoration: InputDecoration(
-          labelText: 'Phone Number',
+          labelText: labelText,
           prefixIcon: Icon(
             icon,
             color: kPrimaryColor,
           ),
+          prefixText: prefixText,
+          hintText: hintText,
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(20),
@@ -38,10 +39,6 @@ class TextFeildWidget extends StatelessWidget {
           ),
           filled: true,
           fillColor: Colors.white,
-          hintText: hintText,
-          hintStyle: const TextStyle(
-            color: kgreyColor,
-          ),
         ),
       ),
     );

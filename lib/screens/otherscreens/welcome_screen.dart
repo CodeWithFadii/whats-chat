@@ -54,7 +54,7 @@ class WelcomeScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    20.heightBox,
+                    30.heightBox,
                     slogan.text.size(42).letterSpacing(2).bold.make()
                   ],
                 ),
@@ -62,6 +62,7 @@ class WelcomeScreen extends StatelessWidget {
               Expanded(
                 child: Column(
                   children: [
+                    50.heightBox,
                     MaterialbuttonWidget(
                       onPressed: () {
                         Get.off(() => Loginscreen());

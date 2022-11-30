@@ -25,7 +25,8 @@ var drawerIconList = <IconData>[
 ];
 const appname = "Quick Chats",
     account = "Account",
-    weWill = "We will send a message on your number for verification",
+    weWill =
+        "We will send a verification code on your number for authentication.",
     chats = "Chats",
     status = "Status",
     connecting = "           connecting lives...",

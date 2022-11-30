@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:watts_clone/screens/homescreen/home_screen.dart';
 import 'package:watts_clone/screens/otherscreens/welcome_screen.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -9,7 +8,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-      nextScreen:    HomeScreen(),
+      nextScreen:  const  WelcomeScreen(),
       splash: 'assets/images/logo.png',
       splashTransition: SplashTransition.slideTransition,
       duration: 200,

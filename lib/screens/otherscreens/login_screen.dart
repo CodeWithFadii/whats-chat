@@ -42,7 +42,16 @@ class Loginscreen extends StatelessWidget {
                     height: 20,
                   ),
                   TextFeildWidget(
-                    controller: emailC,
+                    labelText: 'User Name',
+                    icon: Icons.manage_accounts,
+                    hintText: 'eg.Haroon',
+                    prefixText: '',
+                  ),
+                  12.heightBox,
+                  TextFeildWidget(
+                    hintText: '',
+                    textInputType: TextInputType.phone,
+                    prefixText: '+92',
                   ),
                   13.heightBox,
                   Padding(
@@ -55,7 +64,7 @@ class Loginscreen extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 50),
                 child: MaterialbuttonWidget(
                   onPressed: () {
-                    Get.off(() =>  HomeScreen());
+                    Get.off(() => HomeScreen());
                   },
                 ),
               ),

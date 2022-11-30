@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:watts_clone/consts/const.dart';
+import 'package:watts_clone/consts/strings.dart';
 import 'package:watts_clone/screens/homescreen/components/drawer_component.dart';
 import 'components/appbar_component.dart';
 import 'components/tabbar_component.dart';
@@ -18,14 +20,14 @@ class HomeScreen extends StatelessWidget {
           key: scaffoldKey,
           drawer: drawerWidget(),
           floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.grey,
+            backgroundColor: grey,
             onPressed: () {},
             child: const Icon(
               Icons.edit,
-              color: Colors.white,
+              color: white,
             ),
           ),
-          backgroundColor: Colors.black,
+          backgroundColor: black,
           body: Column(
             children: [
               appBarWidget(scaffoldKey),
