@@ -27,6 +27,7 @@ const appname = "Quick Chats",
     account = "Account",
     weWill =
         "We will send a verification code on your number for authentication.",
+        enterCode = 'Enter your Verification code here',
     chats = "Chats",
     status = "Status",
     connecting = "           connecting lives...",
@@ -40,4 +41,4 @@ const appname = "Quick Chats",
     slogan = "join the\nrevolution\ntoday.";
 
 const aboutText =
-    'This is not your username or pin. This name will be visible in your Quick Chats friends.';
+    'This is not your username or pin. This name will be visible to your friends in Quick Chats .';

@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/consts/strings.dart';
+import 'package:watts_clone/screens/otherscreens/welcome_screen.dart';
 import 'package:watts_clone/screens/profilescreen/profile_screen.dart';
+
+import '../../../consts/auth_const.dart';
 
 Widget drawerWidget() {
   return Drawer(
@@ -44,7 +48,8 @@ Widget drawerWidget() {
                   onTap: () {
                     switch (index) {
                       case 0:
-                        Get.off(() =>const ProfileScreen(),transition: Transition.downToUp);
+                        Get.off(() =>  ProfileScreen(),
+                            transition: Transition.downToUp);
                         break;
                       default:
                     }
@@ -63,7 +68,11 @@ Widget drawerWidget() {
           ),
           const Spacer(),
           ListTile(
-            onTap: () {},
+            onTap: () async {
+              await firebaseAuth.signOut();
+               Get.rawSnackbar(message: 'Logged out',duration: const Duration(seconds: 4));
+              Get.offAll(() =>const WelcomeScreen());
+            },
             leading: const Icon(Icons.logout, color: white),
             title: 'Logout'.text.white.size(16).make(),
           ),
