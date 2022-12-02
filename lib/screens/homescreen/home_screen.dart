@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/consts/strings.dart';
+import 'package:watts_clone/screens/homescreen/allusers/allusers_screen.dart';
 import 'package:watts_clone/screens/homescreen/components/drawer_component.dart';
 import 'components/appbar_component.dart';
 import 'components/tabbar_component.dart';
@@ -21,7 +23,9 @@ class HomeScreen extends StatelessWidget {
           drawer: drawerWidget(),
           floatingActionButton: FloatingActionButton(
             backgroundColor: grey,
-            onPressed: () {},
+            onPressed: () {
+              Get.to(() => AllUsers(), transition: Transition.downToUp);
+            },
             child: const Icon(
               Icons.edit,
               color: white,

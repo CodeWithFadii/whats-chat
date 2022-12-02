@@ -66,7 +66,7 @@ class WelcomeScreen extends StatelessWidget {
                     50.heightBox,
                     MaterialbuttonWidget(
                       onPressed: () {
-                        Get.off(() => Loginscreen());
+                        Get.to(() => Loginscreen());
                       },
                       text: 'Start Messaging',
                     ),

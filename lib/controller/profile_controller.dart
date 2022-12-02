@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
-
+import 'package:path/path.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -13,6 +15,8 @@ class ProfileController extends GetxController {
   var aboutC = TextEditingController();
   var phonenumberC = TextEditingController();
   var imgSrc = ''.obs;
+  var imageData = '';
+  var updateProfileProgress = false.obs;
 
   //updateProfile
   updateProfile(context) async {
@@ -21,6 +25,7 @@ class ProfileController extends GetxController {
       {
         'username': nameC.text,
         'about': aboutC.text,
+        'img_url': imageData,
       },
       SetOptions(merge: true),
     );
@@ -28,6 +33,7 @@ class ProfileController extends GetxController {
   }
 
   pickImage(context, source) async {
+    //requesting permissions for accessing
     await Permission.photos.request();
     await Permission.camera.request();
 
@@ -36,7 +42,9 @@ class ProfileController extends GetxController {
     if (!status.isGranted) {
       try {
         final img =
+            //pick img from gallery or camera
             await ImagePicker().pickImage(source: source, imageQuality: 80);
+        //store image path to a observable var imgSrc
         imgSrc.value = img!.path;
         VxToast.show(context, msg: 'Image picked');
       } on FileSystemException catch (e) {
@@ -48,5 +56,22 @@ class ProfileController extends GetxController {
         msg: 'Permission not given',
       );
     }
+  }
+
+  storeImage() async {
+    updateProfileProgress(true);
+    //converting the source of image to different form
+    var name = basename(imgSrc.value);
+    //setting destination where we want to store our data in firebase storage
+    var destination = "images/${user!.uid}/$name";
+    //creating storage
+    Reference ref = FirebaseStorage.instance.ref().child(destination);
+    //putting data into storage
+    await ref.putFile(File(imgSrc.value));
+    //getting the url uploaded to store in database
+    var d = await ref.getDownloadURL();
+    imageData = d;
+    log(d);
+    updateProfileProgress(false);
   }
 }

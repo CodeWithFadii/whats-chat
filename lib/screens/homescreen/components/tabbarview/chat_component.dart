@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:watts_clone/screens/chatscreen/chat_screen.dart';
+import 'package:watts_clone/screens/homescreen/chatscreen/chat_screen.dart';
 
 Widget chatInfoWidget() {
   return Expanded(
@@ -11,7 +11,7 @@ Widget chatInfoWidget() {
       itemBuilder: (context, index) {
         return ListTile(
           onTap: () {
-            Get.off(() => const ChatScreen(), transition: Transition.downToUp);
+            Get.to(() =>  const ChatScreen(userName: 'Component',), transition: Transition.downToUp);
           },
           leading: const CircleAvatar(
             radius: 28,

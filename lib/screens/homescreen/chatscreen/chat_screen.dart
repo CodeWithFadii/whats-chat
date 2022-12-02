@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/consts/strings.dart';
-import 'package:watts_clone/screens/homescreen/home_screen.dart';
-import '../../consts/const.dart';
+import '../../../consts/const.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+   const ChatScreen({super.key, required this.userName});
+  final String userName;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class ChatScreen extends StatelessWidget {
         leading: const Icon(
           Icons.arrow_back,
         ).onTap(() {
-          Get.off(() => HomeScreen(), transition: Transition.downToUp);
+          Get.back();
         }),
         actions: [
           const Icon(
@@ -39,15 +39,15 @@ class ChatScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text.rich(TextSpan(children: [
+                   Text.rich(TextSpan(children: [
                     TextSpan(
-                      text: 'Username\n',
-                      style: TextStyle(
+                      text: '$userName\n',
+                      style: const TextStyle(
                           color: black,
                           fontSize: 22,
                           fontWeight: FontWeight.w600),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: 'Last seen',
                       style: TextStyle(
                         color: grey,

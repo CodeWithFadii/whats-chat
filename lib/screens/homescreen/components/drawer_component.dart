@@ -5,7 +5,7 @@ import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/consts/strings.dart';
 import 'package:watts_clone/screens/otherscreens/welcome_screen.dart';
-import 'package:watts_clone/screens/profilescreen/profile_screen.dart';
+import 'package:watts_clone/screens/homescreen/profilescreen/profile_screen.dart';
 
 import '../../../consts/auth_const.dart';
 
@@ -48,7 +48,7 @@ Widget drawerWidget() {
                   onTap: () {
                     switch (index) {
                       case 0:
-                        Get.off(() =>  ProfileScreen(),
+                        Get.to(() =>  ProfileScreen(),
                             transition: Transition.downToUp);
                         break;
                       default:

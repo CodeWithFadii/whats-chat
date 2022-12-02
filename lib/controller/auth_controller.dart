@@ -30,7 +30,7 @@ class AuthController extends GetxController {
     //phoneVerificationFailed
     phoneVerificationFailed = (FirebaseAuthException e) {
       if (e.code == 'invalid-phone-number') {
-        print('The provided phone number is not valid.');
+        log('The provided phone number is not valid.');
       }
     };
     //phoneCodeSent

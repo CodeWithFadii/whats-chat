@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/consts/strings.dart';
-import '../../controller/profile_controller.dart';
+import '../../../controller/profile_controller.dart';
 
 const listofIcon = <IconData>[Icons.camera, Icons.browse_gallery];
 const listofText = ['Camera', 'Gallery'];
