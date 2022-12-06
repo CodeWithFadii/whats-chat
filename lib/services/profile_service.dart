@@ -10,6 +10,11 @@ class ProfileService extends GetxController {
   }
 
   static getallUsers() {
-    return  firebaseFirestore.collection(collectionUser).snapshots();
+    return firebaseFirestore
+        .collection(collectionUser)
+        .where('id', isNotEqualTo: user!.uid)
+        .snapshots();
   }
+
+  
 }

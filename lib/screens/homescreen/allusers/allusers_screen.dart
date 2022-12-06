@@ -6,7 +6,10 @@ import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/screens/homescreen/chatscreen/chat_screen.dart';
 import 'package:watts_clone/services/profile_service.dart';
 
+import '../../../controller/home_controller.dart';
+
 class AllUsers extends StatelessWidget {
+  var controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

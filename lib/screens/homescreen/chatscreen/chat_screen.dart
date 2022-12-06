@@ -1,13 +1,20 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:watts_clone/consts/bubble_const.dart';
 import 'package:watts_clone/consts/strings.dart';
+import 'package:watts_clone/controller/home_controller.dart';
+import 'package:watts_clone/screens/homescreen/chatscreen/chatbubble.dart';
 import '../../../consts/const.dart';
-import '../../../controller/home_controller.dart';
+import '../../../controller/chat_controller.dart';
 
 class ChatScreen extends StatelessWidget {
-  var controller = Get.put(HomeController());
-    ChatScreen({super.key});
+  var chatController = Get.put(ChatController());
+  var homeController = Get.find<HomeController>();
+  ChatScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +47,15 @@ class ChatScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                   const Text.rich(TextSpan(children: [
+                  Text.rich(TextSpan(children: [
                     TextSpan(
-                      text: '\n',
-                      style:  TextStyle(
+                      text: '${chatController.friendUserName}\n',
+                      style: const TextStyle(
                           color: black,
                           fontSize: 22,
                           fontWeight: FontWeight.w600),
                     ),
-                     TextSpan(
+                    const TextSpan(
                       text: 'Last seen',
                       style: TextStyle(
                         color: grey,
@@ -82,45 +89,20 @@ class ChatScreen extends StatelessWidget {
             ),
             10.heightBox,
             Expanded(
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: 15,
-                itemBuilder: (context, index) {
-                  return Directionality(
-                    textDirection:
-                        index.isOdd ? TextDirection.rtl : TextDirection.ltr,
-                    child: Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 23,
-                              backgroundImage: NetworkImage(
-                                  index.isEven ? isUser : 'https://media-exp1.licdn.com/dms/image/C560BAQG0idii_L-_qQ/company-logo_200_200/0/1635777707028?e=2147483647&v=beta&t=fD-cCiVlTEk2tVLlFxl7RXMbDZKenXB4mGaHI3bmQgs'),
-                            ),
-                            10.widthBox,
-                            Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                    color: index.isEven ? black : grey,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child:
-                                    'Hello this is first message from here for you....'
-                                        .text
-                                        .color(index.isEven ? white : black)
-                                        .size(16)
-                                        .make(),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
+              child: StreamBuilder<QuerySnapshot>(
+                //from chat controller we getting all chats here
+                stream: chatController.getMessages(chatController.chatID),
+                builder: ((context, AsyncSnapshot snapshot) {
+                  log('start ');
+                  return !snapshot.hasData ? const Center(
+                      child: CircularProgressIndicator(),
+                    ) : ListView(
+                        children: snapshot.data!.docs
+                            .mapIndexed((currentValue, index) {
+                      var docs = snapshot.data!.docs[index];
+                      return chatBubbbleWidget(index, docs);
+                    }).toList());
+                }),
               ),
             ),
             Container(
@@ -131,22 +113,22 @@ class ChatScreen extends StatelessWidget {
                   7.widthBox,
                   Expanded(
                       child: TextField(
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        suffixIcon: const Icon(Icons.attach_file),
-                        prefixIcon: const Icon(Icons.emoji_emotions),
-                        filled: true,
-                        fillColor: white,
-                        hintText: 'Enter your message here...'),
-                  )),
+                          controller: chatController.messageController,
+                          maxLines: 1,
+                          decoration: ktextfielddeco)),
                   10.widthBox,
-                  const CircleAvatar(
-                    radius: 19,
-                    backgroundColor: white,
-                    child: Icon(
-                      Icons.send,
-                      color: black,
+                  GestureDetector(
+                    onTap: () {
+                      chatController
+                          .sendMessage(chatController.messageController.text);
+                    },
+                    child: const CircleAvatar(
+                      radius: 19,
+                      backgroundColor: white,
+                      child: Icon(
+                        Icons.send,
+                        color: black,
+                      ),
                     ),
                   ),
                   7.widthBox,

@@ -7,3 +7,4 @@ FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 User? user = firebaseAuth.currentUser;
 const String collectionUser = 'User';
 const String collectionChats = 'Chats';
+const String collectionMessages = 'messages';
