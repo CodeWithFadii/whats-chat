@@ -7,8 +7,6 @@ import 'package:watts_clone/screens/homescreen/chatscreen/chat_screen.dart';
 import 'package:watts_clone/services/profile_service.dart';
 
 class AllUsers extends StatelessWidget {
-  AllUsers({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,10 +64,12 @@ class AllUsers extends StatelessWidget {
                             8.heightBox,
                             GestureDetector(
                               onTap: () {
-                                Get.to(
-                                    () => ChatScreen(
-                                        userName: '${doc['username']}'),
-                                    transition: Transition.downToUp);
+                                Get.to(() => ChatScreen(),
+                                    transition: Transition.downToUp,
+                                    arguments: [
+                                      doc['username'],
+                                      doc['id'],
+                                    ]);
                               },
                               child: Chip(
                                 label: 'Chat Now'.text.make(),

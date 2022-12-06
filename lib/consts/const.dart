@@ -12,4 +12,3 @@ const kloginStyle = TextStyle(
 );
 const Color white = Colors.white;
 const Color black = Colors.black;
-const logoImage = 'assets/images/logo.png';

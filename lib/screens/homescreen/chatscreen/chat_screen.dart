@@ -3,10 +3,11 @@ import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/consts/strings.dart';
 import '../../../consts/const.dart';
+import '../../../controller/home_controller.dart';
 
 class ChatScreen extends StatelessWidget {
-   const ChatScreen({super.key, required this.userName});
-  final String userName;
+  var controller = Get.put(HomeController());
+    ChatScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,15 +40,15 @@ class ChatScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                   Text.rich(TextSpan(children: [
+                   const Text.rich(TextSpan(children: [
                     TextSpan(
-                      text: '$userName\n',
-                      style: const TextStyle(
+                      text: '\n',
+                      style:  TextStyle(
                           color: black,
                           fontSize: 22,
                           fontWeight: FontWeight.w600),
                     ),
-                    const TextSpan(
+                     TextSpan(
                       text: 'Last seen',
                       style: TextStyle(
                         color: grey,
@@ -97,7 +98,7 @@ class ChatScreen extends StatelessWidget {
                             CircleAvatar(
                               radius: 23,
                               backgroundImage: NetworkImage(
-                                  index.isEven ? isUser : logoImage),
+                                  index.isEven ? isUser : 'https://media-exp1.licdn.com/dms/image/C560BAQG0idii_L-_qQ/company-logo_200_200/0/1635777707028?e=2147483647&v=beta&t=fD-cCiVlTEk2tVLlFxl7RXMbDZKenXB4mGaHI3bmQgs'),
                             ),
                             10.widthBox,
                             Expanded(

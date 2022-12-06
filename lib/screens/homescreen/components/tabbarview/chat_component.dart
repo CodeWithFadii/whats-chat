@@ -11,7 +11,9 @@ Widget chatInfoWidget() {
       itemBuilder: (context, index) {
         return ListTile(
           onTap: () {
-            Get.to(() =>  const ChatScreen(userName: 'Component',), transition: Transition.downToUp);
+            Get.to(() => ChatScreen(),
+                transition: Transition.downToUp,
+                arguments: ['dummy username', 'dummyID']);
           },
           leading: const CircleAvatar(
             radius: 28,

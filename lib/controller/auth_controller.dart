@@ -75,7 +75,7 @@ class AuthController extends GetxController {
           {
             'id': user.uid,
             'username': usernameC.text.toString(),
-            'phonenumber': phonenumberC.text.toString(),
+            'phonenumber': '+92${phonenumberC.text}',
             'about': '',
             'img_url':'',
           },
