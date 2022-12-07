@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/consts/strings.dart';
+import 'package:watts_clone/controller/home_controller.dart';
 import 'package:watts_clone/screens/homescreen/allusers/allusers_screen.dart';
 import 'package:watts_clone/screens/homescreen/components/drawer_component.dart';
 import 'components/appbar_component.dart';
@@ -10,6 +11,7 @@ import 'components/tabbarview_component.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
+  var controller = Get.put(HomeController());
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 

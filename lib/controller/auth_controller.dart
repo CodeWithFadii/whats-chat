@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/consts/auth_const.dart';
 import 'package:watts_clone/screens/homescreen/home_screen.dart';
 
@@ -22,7 +23,7 @@ class AuthController extends GetxController {
   String verificationID = '';
 
   //sentOTP
-  sentOTP() async {
+  sentOTP(context) async {
     //phoneVerificationCompleted
     phoneVerificationCompleted = (PhoneAuthCredential credential) async {
       await firebaseAuth.signInWithCredential(credential);
@@ -30,7 +31,7 @@ class AuthController extends GetxController {
     //phoneVerificationFailed
     phoneVerificationFailed = (FirebaseAuthException e) {
       if (e.code == 'invalid-phone-number') {
-        log('The provided phone number is not valid.');
+        VxToast.show(context, msg: e.toString());
       }
     };
     //phoneCodeSent
@@ -49,7 +50,7 @@ class AuthController extends GetxController {
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
     } catch (e) {
-      Get.snackbar('Error in sentOTP', e.toString());
+      VxToast.show(context, msg: e.toString());
     }
   }
 
@@ -77,7 +78,7 @@ class AuthController extends GetxController {
             'username': usernameC.text.toString(),
             'phonenumber': '+92${phonenumberC.text}',
             'about': '',
-            'img_url':'',
+            'img_url': '',
           },
           SetOptions(merge: true),
         );

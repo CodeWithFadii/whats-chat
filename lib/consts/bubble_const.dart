@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'const.dart';
 
 const kfriendBuble = BorderRadius.only(
-  topLeft: Radius.circular(25),
-  bottomLeft: Radius.circular(25),
-  bottomRight: Radius.circular(25),
+  topLeft: Radius.circular(20),
+  bottomLeft: Radius.circular(20),
+  bottomRight: Radius.circular(20),
 );
 const kuserBuble = BorderRadius.only(
-  topRight: Radius.circular(25),
-  bottomLeft: Radius.circular(25),
-  bottomRight: Radius.circular(25),
+  topRight: Radius.circular(20),
+  bottomLeft: Radius.circular(20),
+  bottomRight: Radius.circular(20),
 );
 final  ktextfielddeco = InputDecoration(
     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),

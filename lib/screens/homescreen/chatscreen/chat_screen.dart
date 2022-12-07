@@ -1,25 +1,24 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:watts_clone/consts/auth_const.dart';
 import 'package:watts_clone/consts/bubble_const.dart';
 import 'package:watts_clone/consts/strings.dart';
-import 'package:watts_clone/controller/home_controller.dart';
 import 'package:watts_clone/screens/homescreen/chatscreen/chatbubble.dart';
+import 'package:watts_clone/services/profile_service.dart';
 import '../../../consts/const.dart';
 import '../../../controller/chat_controller.dart';
 
 class ChatScreen extends StatelessWidget {
-  var chatController = Get.put(ChatController());
-  var homeController = Get.find<HomeController>();
   ChatScreen({super.key});
+  var chatController = Get.put(ChatController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: black,
+      backgroundColor: white,
       appBar: AppBar(
         elevation: 0,
         leading: const Icon(
@@ -37,7 +36,6 @@ class ChatScreen extends StatelessWidget {
       ),
       body: Container(
         decoration: const BoxDecoration(
-            color: white,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20), topRight: Radius.circular(20))),
         child: Column(
@@ -67,19 +65,19 @@ class ChatScreen extends StatelessWidget {
                     children: [
                       const CircleAvatar(
                         radius: 21,
-                        backgroundColor: black,
+                        backgroundColor: grey,
                         child: Icon(
                           Icons.video_call_outlined,
-                          color: white,
+                          color: black,
                         ),
                       ),
                       10.widthBox,
                       const CircleAvatar(
                         radius: 21,
-                        backgroundColor: black,
+                        backgroundColor: grey,
                         child: Icon(
                           Icons.phone,
-                          color: white,
+                          color: black,
                         ),
                       )
                     ],
@@ -88,23 +86,33 @@ class ChatScreen extends StatelessWidget {
               ),
             ),
             10.heightBox,
-            Expanded(
-              child: StreamBuilder<QuerySnapshot>(
-                //from chat controller we getting all chats here
-                stream: chatController.getMessages(chatController.chatID),
-                builder: ((context, AsyncSnapshot snapshot) {
-                  log('start ');
-                  return !snapshot.hasData ? const Center(
+            Obx(() {
+              return chatController.getChatIDloading.value
+                  ? const Center(
                       child: CircularProgressIndicator(),
-                    ) : ListView(
-                        children: snapshot.data!.docs
-                            .mapIndexed((currentValue, index) {
-                      var docs = snapshot.data!.docs[index];
-                      return chatBubbbleWidget(index, docs);
-                    }).toList());
-                }),
-              ),
-            ),
+                    )
+                  : Expanded(
+                      child: StreamBuilder(
+                        //from ProfileService we getting all chats here
+                        stream: chatController
+                            .getMessages(chatController.chatID.value),
+                        builder:
+                            ((context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                          return !snapshot.hasData
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : ListView(
+                                  reverse: true,
+                                  children: snapshot.data!.docs
+                                      .mapIndexed((currentValue, index) {
+                                    var docs = snapshot.data!.docs[index];
+                                    return chatBubbleWidget(docs);
+                                  }).toList());
+                        }),
+                      ),
+                    );
+            }),
             Container(
               color: black,
               height: 65,
@@ -127,7 +135,7 @@ class ChatScreen extends StatelessWidget {
                       backgroundColor: white,
                       child: Icon(
                         Icons.send,
-                        color: black,
+                        color: grey,
                       ),
                     ),
                   ),

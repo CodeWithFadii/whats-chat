@@ -7,6 +7,8 @@ import 'package:watts_clone/consts/auth_const.dart';
 class HomeController extends GetxController {
   late SharedPreferences prefs;
   static HomeController instance = Get.find();
+  RxString username = ''.obs;
+  RxString imgurl = ''.obs;
   getuserData() async {
     await getInstance();
     firebaseFirestore
@@ -14,6 +16,8 @@ class HomeController extends GetxController {
         .where('id', isEqualTo: user!.uid)
         .get()
         .then((value) async {
+      username.value = value.docs[0]['username'];
+      imgurl.value = value.docs[0]['img_url'];
       prefs = await SharedPreferences.getInstance();
       prefs.setString('user_name', value.docs[0]['username']);
       prefs.setString('img_url', value.docs[0]['img_url']);

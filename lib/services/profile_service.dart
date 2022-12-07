@@ -1,7 +1,7 @@
-import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:watts_clone/consts/auth_const.dart';
 
-class ProfileService extends GetxController {
+class ProfileService {
   static getProfileData(String id) {
     return firebaseFirestore
         .collection(collectionUser)

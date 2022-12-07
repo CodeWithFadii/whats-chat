@@ -142,7 +142,7 @@ class Loginscreen extends StatelessWidget {
                       if (authController.isOTPsent.value == false) {
                         log(authController.phonenumberC.text);
                         authController.isOTPsent.value = true;
-                        await authController.sentOTP();
+                        await authController.sentOTP(context);
                       } else {
                         //sending OTP
 

@@ -7,23 +7,24 @@ import 'package:watts_clone/controller/home_controller.dart';
 
 class ChatController extends GetxController {
   var messageController = TextEditingController();
-  var getMessagesloading = false.obs;
+  var getChatIDloading = false.obs;
   var chats = firebaseFirestore.collection(collectionChats);
-  dynamic chatID;
+  RxString chatID = ''.obs;
   var currentUserID = user!.uid;
   var currentUserName = HomeController.instance.prefs.getString('user_name');
   var friendUserID = Get.arguments[1];
   var friendUserName = Get.arguments[0];
 
   getChatID() async {
+    getChatIDloading(true);
     chats
         .where('users', isEqualTo: {friendUserID: null, currentUserID: null})
         .limit(1)
         .get()
         .then((QuerySnapshot snapshot) {
           if (snapshot.docs.isNotEmpty) {
-            chatID = snapshot.docs.single.id;
-            log(chatID);
+            chatID.value = snapshot.docs.single.id;
+            log(chatID.value);
           } else {
             chats.add({
               'users': {currentUserID: null, friendUserID: null},
@@ -34,10 +35,11 @@ class ChatController extends GetxController {
               'createdAT': null,
               'last_msg': ''
             }).then((value) => {
-                  chatID = value.id,
+                  chatID.value = value.id,
                 });
           }
         });
+    getChatIDloading(false);
   }
 
   @override
@@ -48,13 +50,13 @@ class ChatController extends GetxController {
 
   sendMessage(String msg) {
     if (msg.trim().isNotEmpty) {
-      chats.doc(chatID).update({
+      chats.doc(chatID.value).update({
         'createdAT': FieldValue.serverTimestamp(),
         'fromID': currentUserID,
         'toID': friendUserID,
         'last_msg': msg,
       });
-      chats.doc(chatID).collection(collectionMessages).doc().set({
+      chats.doc(chatID.value).collection(collectionMessages).doc().set({
         'createdAT': FieldValue.serverTimestamp(),
         'msg': msg,
         'uid': currentUserID,
@@ -64,14 +66,15 @@ class ChatController extends GetxController {
     }
   }
 
-  getMessages(chatID) {
-    log('start');
-    firebaseFirestore
-        .collection(collectionChats)
-        .doc(chatID)
-        .collection(collectionMessages)
-        .snapshots();
-    log('end');
+  getMessages(String id) {
+    if (id.isNotEmpty) {
+      var data = FirebaseFirestore.instance
+          .collection(collectionChats)
+          .doc(id)
+          .collection(collectionMessages)
+          .orderBy('createdAT', descending: true)
+          .snapshots();
+      return data;
+    }
   }
-  
 }
