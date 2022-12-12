@@ -33,7 +33,9 @@ Widget drawerWidget() {
             CircleAvatar(
               radius: 50,
               backgroundImage:
-                  NetworkImage(HomeController.instance.imgurl.value),
+                  NetworkImage(HomeController.instance.imgurl.value == ''?
+                  isUser:
+                    HomeController.instance.imgurl.value),
             ),
             20.heightBox,
             //user name

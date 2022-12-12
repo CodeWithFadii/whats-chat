@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/consts/strings.dart';
-
 import '../../widgets/materialbuttonwidget.dart';
 import 'login_screen.dart';
 

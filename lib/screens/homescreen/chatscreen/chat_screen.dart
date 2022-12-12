@@ -1,13 +1,10 @@
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:watts_clone/consts/auth_const.dart';
 import 'package:watts_clone/consts/bubble_const.dart';
 import 'package:watts_clone/consts/strings.dart';
 import 'package:watts_clone/screens/homescreen/chatscreen/chatbubble.dart';
-import 'package:watts_clone/services/profile_service.dart';
 import '../../../consts/const.dart';
 import '../../../controller/chat_controller.dart';
 

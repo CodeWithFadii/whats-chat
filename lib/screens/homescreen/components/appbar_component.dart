@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/consts/strings.dart';
 import 'package:watts_clone/controller/home_controller.dart';
 
@@ -39,7 +40,9 @@ Widget appBarWidget(GlobalKey<ScaffoldState> key) {
             return CircleAvatar(
               backgroundColor: Colors.white,
               backgroundImage:
-                  NetworkImage(HomeController.instance.imgurl.value),
+                  NetworkImage(HomeController.instance.imgurl.value == ''?
+                  isUser:
+                    HomeController.instance.imgurl.value),
               radius: 27,
             );
           },

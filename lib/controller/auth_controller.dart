@@ -14,6 +14,7 @@ class AuthController extends GetxController {
   var otpC = List.generate(6, (index) => TextEditingController());
   //initialize observable variable
   var isOTPsent = false.obs;
+  var isloading = false.obs;
   var formKey = GlobalKey<FormState>();
 
   //initialize auth variables
@@ -41,6 +42,7 @@ class AuthController extends GetxController {
     };
 
     try {
+      isloading(true);
       //verifyPhoneNumber
       await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: '+92${phonenumberC.text}',
@@ -49,6 +51,7 @@ class AuthController extends GetxController {
         codeSent: phoneCodeSent,
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
+      isloading(false);
     } catch (e) {
       VxToast.show(context, msg: e.toString());
     }
@@ -62,6 +65,7 @@ class AuthController extends GetxController {
       log(otP);
     }
     try {
+      isloading(true);
       //verifying user
       PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
           verificationId: verificationID, smsCode: otP);
@@ -82,10 +86,12 @@ class AuthController extends GetxController {
           },
           SetOptions(merge: true),
         );
+
         Get.rawSnackbar(
             message: 'Logged In', duration: const Duration(seconds: 4));
         Get.offAll(() => HomeScreen(), transition: Transition.downToUp);
       }
+      isloading(false);
     } catch (e) {
       Get.snackbar('Error in logging', e.toString(),
           duration: const Duration(seconds: 5));

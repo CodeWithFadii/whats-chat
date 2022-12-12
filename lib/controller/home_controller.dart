@@ -35,4 +35,12 @@ class HomeController extends GetxController {
     super.onInit();
     getuserData();
   }
+
+  getReminderMessages() {
+    return firebaseFirestore
+        .collection(collectionChats)
+        .where('users.${user!.uid}', isEqualTo: null)
+        .where('createdAT', isNotEqualTo: null)
+        .snapshots();
+  }
 }

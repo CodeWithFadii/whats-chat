@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:watts_clone/consts/auth_const.dart';
 
 class ProfileService {

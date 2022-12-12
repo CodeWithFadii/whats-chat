@@ -53,7 +53,8 @@ class AllUsers extends StatelessWidget {
                             14.heightBox,
                             CircleAvatar(
                               radius: 40,
-                              backgroundImage: NetworkImage(doc['img_url'] == ''
+                              backgroundImage: 
+                              NetworkImage(doc['img_url'] == ''
                                   ? isUser
                                   : doc['img_url']),
                             ),
