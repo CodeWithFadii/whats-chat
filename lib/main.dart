@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:watts_clone/screens/otherscreens/splash_screen.dart';
-
 import 'consts/app_theme.dart';
 import 'consts/const.dart';
 

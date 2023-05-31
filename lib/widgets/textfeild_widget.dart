@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../consts/app_theme.dart';
 
 class TextFeildWidget extends StatelessWidget {
-  TextEditingController textEditingController;
-  final String labelText;
+  final TextEditingController textEditingController;
+   final String labelText;
   final String? Function(String?)? validator;
   final String hintText;
   final String prefixText;
   final IconData icon;
   final TextInputType textInputType;
-  TextFeildWidget(
+  const TextFeildWidget(
       {super.key,
       required this.validator,
       this.labelText = 'Phone Number',

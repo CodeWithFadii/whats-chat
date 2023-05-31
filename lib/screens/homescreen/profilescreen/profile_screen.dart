@@ -12,7 +12,9 @@ import 'package:watts_clone/screens/homescreen/profilescreen/image_toast.dart';
 import 'package:watts_clone/services/profile_service.dart';
 
 class ProfileScreen extends StatelessWidget {
-  var profileController = Get.put(ProfileController());
+  final profileController = Get.put(ProfileController());
+
+  ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class ProfileScreen extends StatelessWidget {
                     profileController.updateProfile(context);
                   } else {
                     await profileController.storeImage();
+                    // ignore: use_build_context_synchronously
                     profileController.updateProfile(context);
                   }
                 },
@@ -52,8 +55,8 @@ class ProfileScreen extends StatelessWidget {
           future: ProfileService.getProfileData(user!.uid),
           builder:
               ((BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                //if the future builder fetches data from firebase then show to user
-                //otherwise show indicator
+            //if the future builder fetches data from firebase then show to user
+            //otherwise show indicator
             if (snapshot.hasData) {
               // store data comming from internet in var
               //assign it to controllers
@@ -64,7 +67,11 @@ class ProfileScreen extends StatelessWidget {
               //using getx to show indicator when user's pic is uploaded
               return GetX<ProfileController>(builder: (controller) {
                 return controller.updateProfileProgress.value
-                    ? const Center(child: CircularProgressIndicator(color: white,backgroundColor: black,))
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                        color: white,
+                        backgroundColor: black,
+                      ))
                     : Column(
                         /////returning column
                         children: [
@@ -77,11 +84,11 @@ class ProfileScreen extends StatelessWidget {
                                   //if the new user registered
                                   profileController.imgSrc.isEmpty &&
                                           data['img_url'] == ''
-                                          //show this image
+                                      //show this image
                                       ? Image.network(isUser)
                                       //if the user selected image from gallery
                                       : profileController.imgSrc.isNotEmpty
-                                      //show image selected by the user
+                                          //show image selected by the user
                                           ? Image.file(
                                               File(profileController
                                                   .imgSrc.value),
@@ -90,7 +97,7 @@ class ProfileScreen extends StatelessWidget {
                                               .roundedFull
                                               .clip(Clip.hardEdge)
                                               .make()
-                                              //if the user is already store a image show him his pic
+                                          //if the user is already store a image show him his pic
                                           : Image.network((data['img_url']))
                                               .box
                                               .roundedFull

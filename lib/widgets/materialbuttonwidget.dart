@@ -6,8 +6,8 @@ class MaterialbuttonWidget extends StatelessWidget {
   final Color color;
   final String text;
   final Color textcolor;
-  VoidCallback onPressed;
-  MaterialbuttonWidget(
+  final VoidCallback onPressed;
+  const MaterialbuttonWidget(
       {super.key,
       required this.onPressed,
       this.color = kPrimaryColor,

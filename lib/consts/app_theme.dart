@@ -10,9 +10,7 @@ ThemeData lightThemeData(BuildContext context) {
     shadowColor: Theme.of(context).disabledColor,
     dividerColor: const Color(0xff707070),
     canvasColor: Colors.white,
-    backgroundColor: const Color(0xFFFFFFFF),
     scaffoldBackgroundColor: const Color(0xFFF5F5F5),
-    errorColor: kErrorColor,
     textTheme: getTextTheme(),
     primaryTextTheme: getTextTheme(),
     visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -22,23 +20,21 @@ ThemeData lightThemeData(BuildContext context) {
   );
 }
 
-
-
 TextTheme getTextTheme() {
   return const TextTheme(
-    bodyText1: TextStyle(fontFamily: "WorkSans"),
-    bodyText2: TextStyle(fontFamily: "WorkSans"),
-    headline1: TextStyle(fontFamily: "WorkSans"),
-    headline2: TextStyle(fontFamily: "WorkSans"),
-    headline3: TextStyle(fontFamily: "WorkSans"),
-    headline4: TextStyle(fontFamily: "WorkSans"),
-    headline5: TextStyle(fontFamily: "WorkSans"),
-    headline6: TextStyle(fontFamily: "WorkSans"),
-    subtitle1: TextStyle(fontFamily: "WorkSans"),
-    subtitle2: TextStyle(fontFamily: "WorkSans"),
-    button: TextStyle(fontFamily: "WorkSans"),
-    caption: TextStyle(fontFamily: "WorkSans"),
-    overline: TextStyle(fontFamily: "WorkSans"),
+    bodyLarge: TextStyle(fontFamily: "WorkSans"),
+    bodyMedium: TextStyle(fontFamily: "WorkSans"),
+    displayLarge: TextStyle(fontFamily: "WorkSans"),
+    displayMedium: TextStyle(fontFamily: "WorkSans"),
+    displaySmall: TextStyle(fontFamily: "WorkSans"),
+    headlineMedium: TextStyle(fontFamily: "WorkSans"),
+    headlineSmall: TextStyle(fontFamily: "WorkSans"),
+    titleLarge: TextStyle(fontFamily: "WorkSans"),
+    titleMedium: TextStyle(fontFamily: "WorkSans"),
+    titleSmall: TextStyle(fontFamily: "WorkSans"),
+    labelLarge: TextStyle(fontFamily: "WorkSans"),
+    bodySmall: TextStyle(fontFamily: "WorkSans"),
+    labelSmall: TextStyle(fontFamily: "WorkSans"),
   );
 }
 

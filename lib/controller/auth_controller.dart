@@ -11,7 +11,7 @@ class AuthController extends GetxController {
   //intialize controllers
   var usernameC = TextEditingController();
   var phonenumberC = TextEditingController();
-  var otpC = List.generate(6, (index) => TextEditingController());
+  var otpC = TextEditingController();
   //initialize observable variable
   var isOTPsent = false.obs;
   var isloading = false.obs;
@@ -38,6 +38,7 @@ class AuthController extends GetxController {
     //phoneCodeSent
     phoneCodeSent = (String verificationId, int? resendToken) {
       verificationID = verificationId;
+      log(resendToken.toString());
       log(verificationID);
     };
 
@@ -58,17 +59,13 @@ class AuthController extends GetxController {
   }
 
   verifyOTP() async {
-    String otP = '';
     //getting otp entered by the user
-    for (var i = 0; i < otpC.length; i++) {
-      otP += otpC[i].text;
-      log(otP);
-    }
+
     try {
       isloading(true);
       //verifying user
       PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
-          verificationId: verificationID, smsCode: otP);
+          verificationId: verificationID, smsCode: otpC.text.toString());
 
       final User? user =
           (await firebaseAuth.signInWithCredential(phoneAuthCredential)).user;
@@ -93,6 +90,7 @@ class AuthController extends GetxController {
       }
       isloading(false);
     } catch (e) {
+      isloading(false);
       Get.snackbar('Error in logging', e.toString(),
           duration: const Duration(seconds: 5));
     }

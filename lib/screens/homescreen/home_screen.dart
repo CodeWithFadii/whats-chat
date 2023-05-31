@@ -11,7 +11,7 @@ import 'components/tabbarview_component.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-  var controller = Get.put(HomeController());
+  final controller = Get.put(HomeController());
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 

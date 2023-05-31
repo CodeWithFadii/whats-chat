@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:path/path.dart';
+import 'package:path/path.dart' as path;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
@@ -61,7 +61,7 @@ class ProfileController extends GetxController {
   storeImage() async {
     updateProfileProgress(true);
     //converting the source of image to different form
-    var name = basename(imgSrc.value);
+    var name = path.basename(imgSrc.value);
     //setting destination where we want to store our data in firebase storage
     var destination = "images/${user!.uid}/$name";
     //creating storage

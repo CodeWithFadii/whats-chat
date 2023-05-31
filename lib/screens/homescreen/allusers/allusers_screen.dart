@@ -9,7 +9,9 @@ import 'package:watts_clone/services/profile_service.dart';
 import '../../../controller/home_controller.dart';
 
 class AllUsers extends StatelessWidget {
-  var controller = Get.put(HomeController());
+  final controller = Get.put(HomeController());
+
+  AllUsers({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,8 +55,7 @@ class AllUsers extends StatelessWidget {
                             14.heightBox,
                             CircleAvatar(
                               radius: 40,
-                              backgroundImage: 
-                              NetworkImage(doc['img_url'] == ''
+                              backgroundImage: NetworkImage(doc['img_url'] == ''
                                   ? isUser
                                   : doc['img_url']),
                             ),
