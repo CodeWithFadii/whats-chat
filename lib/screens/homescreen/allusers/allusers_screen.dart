@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:watts_clone/consts/auth_const.dart';
 import 'package:watts_clone/consts/const.dart';
-import 'package:watts_clone/screens/homescreen/chatscreen/chat_screen.dart';
+import 'package:watts_clone/controller/chat_controller.dart';
 import 'package:watts_clone/services/profile_service.dart';
 
-import '../../../controller/home_controller.dart';
-
 class AllUsers extends StatelessWidget {
-  final controller = Get.put(HomeController());
-
+  final chatC = Get.put(ChatController());
+  final User? user = firebaseAuth.currentUser;
   AllUsers({super.key});
   @override
   Widget build(BuildContext context) {
@@ -69,12 +69,11 @@ class AllUsers extends StatelessWidget {
                             8.heightBox,
                             GestureDetector(
                               onTap: () {
-                                Get.to(() => ChatScreen(),
-                                    transition: Transition.downToUp,
-                                    arguments: [
-                                      doc['username'],
-                                      doc['id'],
-                                    ]);
+                                chatC.friendImage = doc['img_url'];
+                                chatC.getChatID(
+                                    friendId: doc['id'],
+                                    friendUserName: doc['username'],
+                                    context: context);
                               },
                               child: Chip(
                                 label: 'Chat Now'.text.make(),

@@ -7,6 +7,7 @@ import 'package:watts_clone/screens/homescreen/components/chatbubble_component.d
 
 Widget chatInfoWidget() {
   var controller = Get.put(HomeController());
+
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
     child: StreamBuilder(
@@ -19,9 +20,9 @@ Widget chatInfoWidget() {
             : ListView(
                 children: snapshot.data!.docs.mapIndexed((currentValue, index) {
                 var docs = snapshot.data!.docs[index];
-                return chatBubbleComponent(docs);
+                return ChatBubbleComponent(docs: docs,); 
               }).toList());
-      }),
+      }), 
     ),
   );
 }

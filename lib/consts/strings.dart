@@ -12,22 +12,18 @@ const listOfFeatures = [
 const drawerTextList = [
   "Account",
   "Friends",
-  "Notifications",
-  "Data and Storage",
-  "Help",
 ];
 var drawerIconList = <IconData>[
   Icons.key,
   Icons.handshake,
-  Icons.notifications,
-  Icons.data_object,
-  Icons.help,
 ];
 const appname = "Quick Chats",
     account = "Account",
     weWill =
         "We will send a verification code on your number for authentication.",
-        enterCode = 'Enter your Verification code here',
+    already = "Already have an account?",
+    notHave = "Not have an account?",
+    enterCode = 'Enter your Verification code here',
     chats = "Chats",
     status = "Status",
     connecting = "           connecting lives...",

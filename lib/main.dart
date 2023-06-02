@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:watts_clone/notification/fcm_service.dart';
 import 'package:watts_clone/screens/otherscreens/splash_screen.dart';
 import 'consts/app_theme.dart';
 import 'consts/const.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await FirebaseService.intializeFirebase();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   runApp(const MyApp());
@@ -37,5 +37,3 @@ class MyApp extends StatelessWidget {
         ),
       ];
 }
-
-

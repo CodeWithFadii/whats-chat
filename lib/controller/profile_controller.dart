@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as path;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,11 +10,13 @@ import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/consts/auth_const.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:watts_clone/controller/home_controller.dart';
 
 class ProfileController extends GetxController {
-  var nameC = TextEditingController();
-  var aboutC = TextEditingController();
-  var phonenumberC = TextEditingController();
+  TextEditingController nameC = TextEditingController();
+  TextEditingController aboutC = TextEditingController();
+  TextEditingController phonenumberC = TextEditingController();
+  RxBool isLoading = false.obs;
   var imgSrc = ''.obs;
   var imageData = '';
   var updateProfileProgress = false.obs;
@@ -34,6 +37,7 @@ class ProfileController extends GetxController {
 
   pickImage(context, source) async {
     //requesting permissions for accessing
+
     await Permission.photos.request();
     await Permission.camera.request();
 
@@ -73,5 +77,13 @@ class ProfileController extends GetxController {
     imageData = d;
     log(d);
     updateProfileProgress(false);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    nameC.text = HomeController.instance.username.value;
+    aboutC.text = HomeController.instance.about.value;
+    phonenumberC.text = HomeController.instance.phone.value;
   }
 }

@@ -21,28 +21,19 @@ Widget chatBubbleWidget(DocumentSnapshot docs) {
         padding: const EdgeInsets.all(8),
         child: Row(
           children: [
-            CircleAvatar(
-              radius: 26,
-              backgroundImage: NetworkImage(docs['uid'] == user!.uid
-                  ? isUser
-                  : 'https://media-exp1.licdn.com/dms/image/C560BAQG0idii_L-_qQ/company-logo_200_200/0/1635777707028?e=2147483647&v=beta&t=fD-cCiVlTEk2tVLlFxl7RXMbDZKenXB4mGaHI3bmQgs'),
-            ),
-            10.widthBox,
-            Expanded(
-              child: Directionality(
-                textDirection: TextDirection.ltr,
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                      color: docs['uid'] == user!.uid ? black : grey,
-                      borderRadius:
-                          docs['uid'] == user!.uid ? kfriendBuble : kuserBuble),
-                  child: '${docs['msg']}'
-                      .text
-                      .color(docs['uid'] == user!.uid ? white : black)
-                      .size(16)
-                      .make(),
-                ),
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                    color: docs['uid'] == user!.uid ? black : grey,
+                    borderRadius:
+                        docs['uid'] == user!.uid ? kfriendBuble : kuserBuble),
+                child: '${docs['msg']}'
+                    .text
+                    .color(docs['uid'] == user!.uid ? white : black)
+                    .size(16)
+                    .make(),
               ),
             ),
             10.widthBox,

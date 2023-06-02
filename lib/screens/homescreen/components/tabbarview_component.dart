@@ -16,7 +16,7 @@ Widget tabbarViewWidget() {
           child: statusWidget(),
         ),
         Container(
-          color: Colors.green,
+          color: Colors.white,
         ),
       ],
     ),

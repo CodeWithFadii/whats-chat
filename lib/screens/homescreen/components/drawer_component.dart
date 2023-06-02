@@ -6,7 +6,6 @@ import 'package:watts_clone/consts/strings.dart';
 import 'package:watts_clone/controller/home_controller.dart';
 import 'package:watts_clone/screens/otherscreens/welcome_screen.dart';
 import 'package:watts_clone/screens/homescreen/profilescreen/profile_screen.dart';
-
 import '../../../consts/auth_const.dart';
 
 Widget drawerWidget() {
@@ -32,10 +31,10 @@ Widget drawerWidget() {
             10.heightBox,
             CircleAvatar(
               radius: 50,
-              backgroundImage:
-                  NetworkImage(HomeController.instance.imgurl.value == ''?
-                  isUser:
-                    HomeController.instance.imgurl.value),
+              backgroundImage: NetworkImage(
+                  HomeController.instance.imgurl.value == ''
+                      ? isUser
+                      : HomeController.instance.imgurl.value),
             ),
             20.heightBox,
             //user name
@@ -51,12 +50,8 @@ Widget drawerWidget() {
               children: List.generate(drawerIconList.length, (index) {
                 return ListTile(
                     onTap: () {
-                      switch (index) {
-                        case 0:
-                          Get.to(() => ProfileScreen(),
-                              transition: Transition.downToUp);
-                          break;
-                        default:
+                      if (index == 0) {
+                        Get.to(() => ProfileScreen());
                       }
                     },
                     leading:

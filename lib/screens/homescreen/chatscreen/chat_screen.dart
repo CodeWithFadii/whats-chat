@@ -9,9 +9,9 @@ import '../../../consts/const.dart';
 import '../../../controller/chat_controller.dart';
 
 class ChatScreen extends StatelessWidget {
-  ChatScreen({super.key});
+  ChatScreen({super.key, required this.friendName});
   final chatController = Get.put(ChatController());
-
+  final String friendName;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,19 +44,12 @@ class ChatScreen extends StatelessWidget {
                 children: [
                   Text.rich(TextSpan(children: [
                     TextSpan(
-                      text: '${chatController.friendUserName}\n',
+                      text: friendName,
                       style: const TextStyle(
                           color: black,
                           fontSize: 22,
                           fontWeight: FontWeight.w600),
                     ),
-                    const TextSpan(
-                      text: 'Last seen',
-                      style: TextStyle(
-                        color: grey,
-                        fontSize: 16,
-                      ),
-                    )
                   ])),
                   Row(
                     children: [

@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 import 'package:watts_clone/consts/strings.dart';
 import 'package:watts_clone/controller/auth_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:watts_clone/screens/otherscreens/join_again.dart';
+import 'package:watts_clone/screens/otherscreens/login_screen.dart';
 import '../../consts/const.dart';
 import '../../widgets/materialbuttonwidget.dart';
 import '../../widgets/textfeild_widget.dart';
 
-class Loginscreen extends StatelessWidget {
-  Loginscreen({super.key});
+class JoinAgain extends StatelessWidget {
+  JoinAgain({super.key});
   final authController = Get.put(AuthController());
 
   @override
@@ -35,7 +35,7 @@ class Loginscreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Let's Connect",
+                                  "Join Again",
                                   style: kloginStyle,
                                 ),
                               ],
@@ -44,21 +44,9 @@ class Loginscreen extends StatelessWidget {
                               height: 20,
                             ),
                             Form(
-                              key: authController.formKey,
+                              key: authController.joinagainformKey,
                               child: Column(
                                 children: [
-                                  TextFeildWidget(
-                                    validator: (value) {
-                                      return null;
-                                    },
-                                    textEditingController:
-                                        authController.usernameC,
-                                    labelText: 'User Name',
-                                    icon: Icons.manage_accounts,
-                                    hintText: 'eg.Haroon',
-                                    prefixText: '',
-                                  ),
-                                  12.heightBox,
                                   TextFeildWidget(
                                     validator: (value) {
                                       if (value!.isEmpty || value.length < 9) {
@@ -87,12 +75,12 @@ class Loginscreen extends StatelessWidget {
                             15.heightBox,
                             GestureDetector(
                               onTap: () {
-                                Get.to(() => JoinAgain());
+                                Get.to(() => Loginscreen());
                               },
                               child: Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 45),
-                                child: already.text.bold.size(15).make(),
+                                child: notHave.text.bold.size(15).make(),
                               ),
                             ),
                             13.heightBox,
@@ -101,10 +89,10 @@ class Loginscreen extends StatelessWidget {
                                 return Visibility(
                                   visible: authController.isOTPsent.value,
                                   child: TextFeildWidget(
+                                    labelText: 'Verification code',
                                     validator: (value) {
                                       return null;
                                     },
-                                    labelText: 'Verification code',
                                     icon: Icons.message,
                                     prefixText: '',
                                     hintText: 'Enter Varification code',
@@ -122,9 +110,8 @@ class Loginscreen extends StatelessWidget {
                             onPressed: () async {
                               //verifying textfields were not empty
 
-                              if (authController.formKey.currentState!
-                                      .validate() &&
-                                  authController.usernameC.text.isNotEmpty) {
+                              if (authController.joinagainformKey.currentState!
+                                  .validate()) {
                                 //verifying otp
                                 if (authController.isOTPsent.value == false) {
                                   log(authController.phonenumberC.text);
@@ -132,11 +119,8 @@ class Loginscreen extends StatelessWidget {
                                   await authController.sentOTP(context);
                                 } else {
                                   //sending OTP
-                                  await authController.verifyOTP();
+                                  await authController.joinAgain();
                                 }
-                              } else {
-                                VxToast.show(context,
-                                    msg: 'Field are required');
                               }
                               // Get.off(() => HomeScreen());
                             },
