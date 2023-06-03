@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/consts/auth_const.dart';
-import '../../../consts/bubble_const.dart';
-import '../../../consts/const.dart';
-import '../../../consts/strings.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:watts_clone/consts/bubble_const.dart';
+import 'package:watts_clone/consts/const.dart';
+import 'package:watts_clone/consts/strings.dart';
 
 Widget chatBubbleWidget(DocumentSnapshot docs) {
   DateTime dateTime = docs['createdAT'] == null

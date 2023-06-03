@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/consts/strings.dart';
 import 'package:watts_clone/controller/auth_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/screens/otherscreens/login_screen.dart';
-import '../../consts/const.dart';
-import '../../widgets/materialbuttonwidget.dart';
-import '../../widgets/textfeild_widget.dart';
+import 'package:watts_clone/widgets/materialbuttonwidget.dart';
+import 'package:watts_clone/widgets/textfeild_widget.dart';
 
 class JoinAgain extends StatelessWidget {
   JoinAgain({super.key});

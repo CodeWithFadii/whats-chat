@@ -9,7 +9,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/consts/auth_const.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:watts_clone/controller/home_controller.dart';
 
 class ProfileController extends GetxController {
@@ -23,16 +22,21 @@ class ProfileController extends GetxController {
 
   //updateProfile
   updateProfile(context) async {
-    var data = firebaseFirestore.collection(collectionUser).doc(user!.uid);
-    await data.set(
-      {
-        'username': nameC.text,
-        'about': aboutC.text,
-        'img_url': imageData,
-      },
-      SetOptions(merge: true),
-    );
-    VxToast.show(context, msg: 'Profile updated successfully');
+    try {
+      var data = firebaseFirestore.collection(collectionUser).doc(user!.uid);
+      await data.update(
+        {
+          'username': nameC.text,
+          'about': aboutC.text,
+          'img_url': imgSrc.value.isEmpty
+              ? HomeController.instance.imgurl.value
+              : imageData,
+        },
+      );
+      VxToast.show(context, msg: 'Profile updated successfully');
+    } on Exception catch (e) {
+      print(e.toString());
+    }
   }
 
   pickImage(context, source) async {

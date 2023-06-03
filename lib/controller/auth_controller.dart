@@ -89,7 +89,6 @@ class AuthController extends GetxController {
       isloading(false);
     } catch (e) {
       isloading(false);
-      print(e.toString());
       Get.snackbar('Error in logging', e.toString(),
           duration: const Duration(seconds: 5));
     }
@@ -122,7 +121,6 @@ class AuthController extends GetxController {
       isloading(false);
     } catch (e) {
       isloading(false);
-      print(e.toString());
       Get.snackbar('Error in logging', e.toString(),
           duration: const Duration(seconds: 5));
     }

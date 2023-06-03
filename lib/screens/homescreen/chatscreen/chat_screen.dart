@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/consts/bubble_const.dart';
+import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/consts/strings.dart';
+import 'package:watts_clone/controller/chat_controller.dart';
 import 'package:watts_clone/screens/homescreen/chatscreen/chatbubble.dart';
-import '../../../consts/const.dart';
-import '../../../controller/chat_controller.dart';
 
 class ChatScreen extends StatelessWidget {
   ChatScreen({super.key, required this.friendName});

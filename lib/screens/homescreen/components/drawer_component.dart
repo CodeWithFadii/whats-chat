@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:watts_clone/consts/auth_const.dart';
 import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/consts/strings.dart';
 import 'package:watts_clone/controller/home_controller.dart';
 import 'package:watts_clone/screens/otherscreens/welcome_screen.dart';
 import 'package:watts_clone/screens/homescreen/profilescreen/profile_screen.dart';
-import '../../../consts/auth_const.dart';
+
 
 Widget drawerWidget() {
   return Drawer(
