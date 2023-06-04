@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -10,9 +11,49 @@ import 'package:watts_clone/screens/otherscreens/join_again.dart';
 import 'package:watts_clone/widgets/materialbuttonwidget.dart';
 import 'package:watts_clone/widgets/textfeild_widget.dart';
 
-class Loginscreen extends StatelessWidget {
-  Loginscreen({super.key});
+class Loginscreen extends StatefulWidget {
+  const Loginscreen({super.key});
+
+  @override
+  State<Loginscreen> createState() => _LoginscreenState();
+}
+
+
+
+class _LoginscreenState extends State<Loginscreen> {
   final authController = Get.put(AuthController());
+  Timer? timer;
+  int start = 40;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (start == 0) {
+          setState(() {
+            if (!mounted) return;
+            timer.cancel();
+          });
+        } else {
+          if (!mounted) return;
+          setState(() {
+            start--;
+          });
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +128,7 @@ class Loginscreen extends StatelessWidget {
                             15.heightBox,
                             GestureDetector(
                               onTap: () {
-                                Get.to(() => JoinAgain());
+                                Get.to(() => const JoinAgain());
                               },
                               child: Padding(
                                 padding:
@@ -113,12 +154,36 @@ class Loginscreen extends StatelessWidget {
                                 );
                               },
                             ),
-                            13.heightBox,
+                            20.heightBox,
+                            authController.isOTPsent.value
+                                ? MaterialbuttonWidget(
+                                    color:
+                                        start == 0 ? Colors.black : Colors.grey,
+                                    onPressed: () async {
+                                      if (start == 0) {
+                                        if (authController.formKey.currentState!
+                                                .validate() &&
+                                            authController
+                                                .usernameC.text.isNotEmpty) {
+                                          await authController.sentOTP(context);
+                                        }
+                                        setState(() {
+                                          start = 40;
+                                          startTimer();
+                                        });
+                                      }
+                                    },
+                                    text: 'SEND OTP AGAIN    $start',
+                                  )
+                                : Container()
                           ],
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 50),
                           child: MaterialbuttonWidget(
+                            text: authController.isOTPsent.value == false
+                                ? 'GET OTP'
+                                : 'VERIFY OTP',
                             onPressed: () async {
                               //verifying textfields were not empty
 
@@ -128,6 +193,9 @@ class Loginscreen extends StatelessWidget {
                                 //verifying otp
                                 if (authController.isOTPsent.value == false) {
                                   log(authController.phonenumberC.text);
+                                  setState(() {
+                                    startTimer();
+                                  });
                                   authController.isOTPsent.value = true;
                                   await authController.sentOTP(context);
                                 } else {

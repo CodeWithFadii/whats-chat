@@ -2,7 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 class SendMethod {
-  static void sendNotification(String title, String body, String sentTo) async {
+  static void sendNotification(String title, String body, String sentTo,
+      String friendName, String friendId) async {
     String url = 'https://fcm.googleapis.com/fcm/send';
     String serverKey =
         'AAAAVEnwmic:APA91bHL_o8HQBYcAiFs09p7-S30a_2CR4zmlpEXVIipsEJ4Qcj0gfBMMwDfZkugAamcbV2o6e9aHnzItdSfQPVWRyXy4NhzmFb5mFU2lhXPICbGm8J31vwhYO6_w56vXDLyGO9HBfnm';
@@ -19,8 +20,8 @@ class SendMethod {
           'data': {
             'click_action': 'FLUTTER_NOTIFICATION_CLICK',
             'status': 'done',
-            'friend_name': 'Haroon',
-            'friend_id': 'KdHaTnUWnyNmJiQZWDUu7yNclJ72',
+            'friend_name': friendName,
+            'friend_id': friendId,
           },
           'notification': {
             'title': title,

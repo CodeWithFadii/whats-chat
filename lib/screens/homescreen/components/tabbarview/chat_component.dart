@@ -17,12 +17,23 @@ Widget chatInfoWidget() {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : ListView(
-                children: snapshot.data!.docs.mapIndexed((currentValue, index) {
-                var docs = snapshot.data!.docs[index];
-                return ChatBubbleComponent(docs: docs,); 
-              }).toList());
-      }), 
+            : snapshot.data!.docs.isEmpty
+                ? const Center(
+                    child: Text(
+                      'No Chats Available',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                    ),
+                  )
+                : ListView(
+                    children:
+                        snapshot.data!.docs.mapIndexed((currentValue, index) {
+                    var docs = snapshot.data!.docs[index];
+                    return ChatBubbleComponent(
+                      docs: docs,
+                    );
+                  }).toList());
+      }),
     ),
   );
 }

@@ -38,9 +38,9 @@ class AuthController extends GetxController {
       verificationID = verificationId;
     }
 
-    // codeAutoRetrievalTimeout(String verificationId) {
-    //   verificationID = verificationId;
-    // }
+    codeAutoRetrievalTimeout(String verificationId) {
+      verificationID = verificationId;
+    }
 
     try {
       isloading(true);
@@ -50,7 +50,7 @@ class AuthController extends GetxController {
           verificationCompleted: phoneVerificationCompleted,
           verificationFailed: phoneVerificationFailed,
           codeSent: phoneCodeSent,
-          codeAutoRetrievalTimeout: (code) {});
+          codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
       isloading(false);
     } catch (e) {
       VxToast.show(context, msg: 'Please try again later');

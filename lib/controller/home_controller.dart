@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:watts_clone/consts/auth_const.dart';
 
@@ -7,12 +8,19 @@ class HomeController extends GetxController {
   RxString imgurl = ''.obs;
   RxString about = ''.obs;
   RxString phone = ''.obs;
+
   static HomeController instance = Get.find();
+
   getuserData() async {
     User? user = firebaseAuth.currentUser;
+    final token = await FirebaseMessaging.instance.getToken();
+    await firebaseFirestore
+        .collection(collectionUser)
+        .doc(user!.uid)
+        .update({'fcm_token': token});
     firebaseFirestore
         .collection(collectionUser)
-        .where('id', isEqualTo: user!.uid)
+        .where('id', isEqualTo: user.uid)
         .get()
         .then((value) async {
       username.value = value.docs[0]['username'];
@@ -31,8 +39,9 @@ class HomeController extends GetxController {
   getReminderMessages() {
     return firebaseFirestore
         .collection(collectionChats)
+        .where('last_msg', isNotEqualTo: '')
         .where('users_array', arrayContains: user!.uid)
-        .where('createdAT', isNotEqualTo: null)
+        .orderBy('last_msg', descending: true)
         .snapshots();
   }
 }

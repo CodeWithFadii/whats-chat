@@ -34,12 +34,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application
   //
-  getToken() async {
-    final token = await FirebaseMessaging.instance.getToken();
-    print(token);
-  }
-
-  static ChatController chatC = Get.put(ChatController());
+  // getToken() async {
+  //   final token = await FirebaseMessaging.instance.getToken();
+  //   print(token);
+  // }
 
   void init() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -49,6 +47,7 @@ class _MyAppState extends State<MyApp> {
     stream.listen(
       (RemoteMessage event) async {
         if (user != null) {
+          ChatController chatC = Get.put(ChatController());
           chatC.getChatID(
               friendId: event.data['friend_id'],
               friendUserName: event.data['friend_name'],
@@ -64,11 +63,12 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     init();
-    getToken();
+    // getToken();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) async {
         if (widget.message != null) {
           if (user != null) {
+            ChatController chatC = Get.put(ChatController());
             chatC.getChatID(
                 friendId: widget.message!.data['friend_id'],
                 friendUserName: widget.message!.data['friend_name'],

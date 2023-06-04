@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -10,9 +11,47 @@ import 'package:watts_clone/screens/otherscreens/login_screen.dart';
 import 'package:watts_clone/widgets/materialbuttonwidget.dart';
 import 'package:watts_clone/widgets/textfeild_widget.dart';
 
-class JoinAgain extends StatelessWidget {
-  JoinAgain({super.key});
+class JoinAgain extends StatefulWidget {
+  const JoinAgain({super.key});
+
+  @override
+  State<JoinAgain> createState() => _JoinAgainState();
+}
+
+class _JoinAgainState extends State<JoinAgain> {
   final authController = Get.put(AuthController());
+  Timer? timer;
+  int start = 40;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (start == 0) {
+          setState(() {
+            if (!mounted) return;
+            timer.cancel();
+          });
+        } else {
+          if (!mounted) return;
+          setState(() {
+            start--;
+          });
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +114,7 @@ class JoinAgain extends StatelessWidget {
                             15.heightBox,
                             GestureDetector(
                               onTap: () {
-                                Get.to(() => Loginscreen());
+                                Get.to(() => const Loginscreen());
                               },
                               child: Padding(
                                 padding:
@@ -101,7 +140,26 @@ class JoinAgain extends StatelessWidget {
                                 );
                               },
                             ),
-                            13.heightBox,
+                            20.heightBox,
+                            authController.isOTPsent.value
+                                ? MaterialbuttonWidget(
+                                    color:
+                                        start == 0 ? Colors.black : Colors.grey,
+                                    onPressed: () async {
+                                      if (start == 0) {
+                                        if (authController.formKey.currentState!
+                                            .validate()) {
+                                          await authController.sentOTP(context);
+                                        }
+                                        setState(() {
+                                          start = 40;
+                                          startTimer();
+                                        });
+                                      }
+                                    },
+                                    text: 'SEND OTP AGAIN    $start',
+                                  )
+                                : Container()
                           ],
                         ),
                         Padding(
@@ -115,6 +173,9 @@ class JoinAgain extends StatelessWidget {
                                 //verifying otp
                                 if (authController.isOTPsent.value == false) {
                                   log(authController.phonenumberC.text);
+                                  setState(() {
+                                    startTimer();
+                                  });
                                   authController.isOTPsent.value = true;
                                   await authController.sentOTP(context);
                                 } else {

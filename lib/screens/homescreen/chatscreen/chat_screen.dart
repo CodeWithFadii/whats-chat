@@ -6,12 +6,20 @@ import 'package:watts_clone/consts/bubble_const.dart';
 import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/consts/strings.dart';
 import 'package:watts_clone/controller/chat_controller.dart';
+import 'package:watts_clone/controller/home_controller.dart';
+import 'package:watts_clone/fcm_service/send_method.dart';
 import 'package:watts_clone/screens/homescreen/chatscreen/chatbubble.dart';
 
 class ChatScreen extends StatelessWidget {
-  ChatScreen({super.key, required this.friendName});
-  final chatController = Get.put(ChatController());
+  ChatScreen(
+      {super.key,
+      required this.friendName,
+      required this.friendToken,
+      required this.friendId});
+  final chatController = Get.find<ChatController>();
   final String friendName;
+  final String friendToken;
+  final String friendId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +87,9 @@ class ChatScreen extends StatelessWidget {
             Obx(() {
               return chatController.getChatIDloading.value
                   ? const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: Colors.green,
+                      ),
                     )
                   : Expanded(
                       child: StreamBuilder(
@@ -117,8 +127,17 @@ class ChatScreen extends StatelessWidget {
                   10.widthBox,
                   GestureDetector(
                     onTap: () {
-                      chatController
-                          .sendMessage(chatController.messageController.text);
+                      chatController.sendMessage(
+                          chatController.messageController.text,
+                          chatController.chatID.value);
+                      if (chatController.messageController.text.isNotEmpty) {
+                        SendMethod.sendNotification(
+                            HomeController.instance.username.value,
+                            chatController.messageController.text,
+                            friendToken,
+                            friendName,
+                            friendId);
+                      }
                     },
                     child: const CircleAvatar(
                       radius: 19,

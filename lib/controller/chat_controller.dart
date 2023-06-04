@@ -18,7 +18,17 @@ class ChatController extends GetxController {
       required String friendUserName,
       required BuildContext context}) async {
     try {
+      String friendToken = '';
+      var currentUserID = user!.uid;
       getChatIDloading(true);
+      firebaseFirestore
+          .collection(collectionUser)
+          .doc(friendId)
+          .get()
+          .then((value) {
+        friendToken = value['fcm_token'];
+      });
+
       chats
           .where('users', isEqualTo: {currentUserID: null, friendId: null})
           .limit(1)
@@ -29,6 +39,8 @@ class ChatController extends GetxController {
               getChatIDloading(false);
               Get.to(() => ChatScreen(
                     friendName: friendUserName,
+                    friendToken: friendToken,
+                    friendId: friendId,
                   ));
             } else {
               DocumentSnapshot doc = await FirebaseFirestore.instance
@@ -49,6 +61,8 @@ class ChatController extends GetxController {
                   });
               Get.to(() => ChatScreen(
                     friendName: friendUserName,
+                    friendToken: friendToken,
+                    friendId: friendId,
                   ));
             }
           });
@@ -58,31 +72,30 @@ class ChatController extends GetxController {
     }
   }
 
-  sendMessage(String msg) {
+  getMessages(String id) {
+    if (id.isNotEmpty) {
+      return FirebaseFirestore.instance
+          .collection('Chats')
+          .doc(id)
+          .collection('messages')
+          .orderBy('createdAT', descending: true)
+          .snapshots();
+    }
+  }
+
+  sendMessage(String msg, String chatId) {
     if (msg.trim().isNotEmpty) {
-      chats.doc(chatID.value).update({
+      chats.doc(chatId).update({
         'createdAT': FieldValue.serverTimestamp(),
         'last_msg': msg,
       });
-      chats.doc(chatID.value).collection(collectionMessages).doc().set({
+      chats.doc(chatId).collection(collectionMessages).doc().set({
         'createdAT': FieldValue.serverTimestamp(),
         'msg': msg,
         'uid': currentUserID,
       }).then((value) {
         messageController.clear();
       });
-    }
-  }
-
-  getMessages(String id) {
-    if (id.isNotEmpty) {
-      var data = FirebaseFirestore.instance
-          .collection(collectionChats)
-          .doc(id)
-          .collection(collectionMessages)
-          .orderBy('createdAT', descending: true)
-          .snapshots();
-      return data;
     }
   }
 }

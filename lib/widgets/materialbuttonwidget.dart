@@ -7,12 +7,14 @@ class MaterialbuttonWidget extends StatelessWidget {
   final String text;
   final Color textcolor;
   final VoidCallback onPressed;
+  final double width;
   const MaterialbuttonWidget(
       {super.key,
       required this.onPressed,
       this.color = kPrimaryColor,
       this.text = 'Continue',
-      this.textcolor = Colors.white});
+      this.textcolor = Colors.white,
+      this.width = 250});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class MaterialbuttonWidget extends StatelessWidget {
       onPressed: onPressed,
       elevation: 6,
       color: color,
-      minWidth: 250,
+      minWidth: width,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(13),
       ),

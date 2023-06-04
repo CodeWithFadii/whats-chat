@@ -19,12 +19,7 @@ class FCMProvider with ChangeNotifier {
   static Future<void> onTapNotification(NotificationResponse? response) async {
     if (FCMProvider._context == null || response?.payload == null) return;
     final data = FCMProvider.convertPayload(response!.payload!);
-    if (data.containsKey('friend_name')) {
-      chatC.getChatID(
-          friendId: data['friend_id'],
-          friendUserName: data['friend_name'],
-          context: _context!);
-    }
+    if (data.containsKey('friend_name')) {}
   }
 
   static Map convertPayload(String payload) {
