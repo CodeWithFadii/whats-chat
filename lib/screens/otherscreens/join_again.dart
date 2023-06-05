@@ -165,6 +165,9 @@ class _JoinAgainState extends State<JoinAgain> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 50),
                           child: MaterialbuttonWidget(
+                            text: authController.isOTPsent.value == false
+                                ? 'GET OTP'
+                                : 'VERIFY OTP',
                             onPressed: () async {
                               //verifying textfields were not empty
 

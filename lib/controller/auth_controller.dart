@@ -23,7 +23,27 @@ class AuthController extends GetxController {
   sentOTP(context) async {
     //phoneVerificationCompleted
     phoneVerificationCompleted(PhoneAuthCredential credential) async {
-      await firebaseAuth.signInWithCredential(credential);
+      final User? user =
+          (await firebaseAuth.signInWithCredential(credential)).user;
+      //sending data to firebase
+      if (user != null) {
+        DocumentReference store =
+            firebaseFirestore.collection(collectionUser).doc(user.uid);
+        await store.set(
+          {
+            'id': user.uid,
+            'username': usernameC.text.toString(),
+            'phonenumber': '+92${phonenumberC.text}',
+            'about': '',
+            'img_url': '',
+          },
+          SetOptions(merge: true),
+        );
+
+        Get.rawSnackbar(
+            message: 'Logged In', duration: const Duration(seconds: 4));
+        Get.offAll(() => HomeScreen(), transition: Transition.downToUp);
+      }
     }
 
     //phoneVerificationFailed

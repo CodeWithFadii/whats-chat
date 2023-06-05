@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:watts_clone/consts/auth_const.dart';
 import 'package:watts_clone/consts/bubble_const.dart';
 import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/consts/strings.dart';
@@ -11,15 +12,17 @@ import 'package:watts_clone/fcm_service/send_method.dart';
 import 'package:watts_clone/screens/homescreen/chatscreen/chatbubble.dart';
 
 class ChatScreen extends StatelessWidget {
-  ChatScreen(
-      {super.key,
-      required this.friendName,
-      required this.friendToken,
-      required this.friendId});
+  ChatScreen({
+    super.key,
+    required this.userName,
+    required this.friendToken,
+    required this.friendName,
+  });
   final chatController = Get.find<ChatController>();
+  final String userName;
   final String friendName;
   final String friendToken;
-  final String friendId;
+  final currentUserID = user!.uid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,8 +138,8 @@ class ChatScreen extends StatelessWidget {
                             HomeController.instance.username.value,
                             chatController.messageController.text,
                             friendToken,
-                            friendName,
-                            friendId);
+                            userName,
+                            user!.uid);
                       }
                     },
                     child: const CircleAvatar(

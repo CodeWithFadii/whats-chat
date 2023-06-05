@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -11,7 +12,7 @@ class ChatController extends GetxController {
   var chats = firebaseFirestore.collection(collectionChats);
   RxString chatID = ''.obs;
   String friendImage = '';
-  var currentUserID = user!.uid;
+  User? currentUserID;
 
   getChatID(
       {required String friendId,
@@ -21,7 +22,7 @@ class ChatController extends GetxController {
       String friendToken = '';
       var currentUserID = user!.uid;
       getChatIDloading(true);
-      firebaseFirestore
+      await firebaseFirestore
           .collection(collectionUser)
           .doc(friendId)
           .get()
@@ -34,19 +35,19 @@ class ChatController extends GetxController {
           .limit(1)
           .get()
           .then((QuerySnapshot snapshot) async {
+            DocumentSnapshot doc = await FirebaseFirestore.instance
+                .collection('User')
+                .doc(currentUserID)
+                .get();
             if (snapshot.docs.isNotEmpty) {
               chatID.value = snapshot.docs.single.id;
               getChatIDloading(false);
               Get.to(() => ChatScreen(
-                    friendName: friendUserName,
+                    userName: doc['username'],
                     friendToken: friendToken,
-                    friendId: friendId,
+                    friendName: friendUserName,
                   ));
             } else {
-              DocumentSnapshot doc = await FirebaseFirestore.instance
-                  .collection('User')
-                  .doc(currentUserID)
-                  .get();
               chats.add({
                 'users': {currentUserID: null, friendId: null},
                 'users_array': [currentUserID, friendId],
@@ -60,9 +61,9 @@ class ChatController extends GetxController {
                     chatID.value = value.id,
                   });
               Get.to(() => ChatScreen(
-                    friendName: friendUserName,
+                    userName: doc['username'],
                     friendToken: friendToken,
-                    friendId: friendId,
+                    friendName: friendUserName,
                   ));
             }
           });
@@ -92,7 +93,7 @@ class ChatController extends GetxController {
       chats.doc(chatId).collection(collectionMessages).doc().set({
         'createdAT': FieldValue.serverTimestamp(),
         'msg': msg,
-        'uid': currentUserID,
+        'uid': user!.uid,
       }).then((value) {
         messageController.clear();
       });

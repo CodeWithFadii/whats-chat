@@ -34,10 +34,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application
   //
-  // getToken() async {
-  //   final token = await FirebaseMessaging.instance.getToken();
-  //   print(token);
-  // }
+  getToken() async {
+    final token = await FirebaseMessaging.instance.getToken();
+    print(token);
+  }
 
   void init() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -62,13 +62,13 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    ChatController chatC = Get.put(ChatController());
     init();
     // getToken();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) async {
         if (widget.message != null) {
           if (user != null) {
-            ChatController chatC = Get.put(ChatController());
             chatC.getChatID(
                 friendId: widget.message!.data['friend_id'],
                 friendUserName: widget.message!.data['friend_name'],
@@ -86,7 +86,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: lightThemeData(context),
-      title: 'Flutter Demo',
+      title: 'Watts Chat',
       themeMode: ThemeMode.system,
       initialRoute: splash,
       getPages: appRoutes(),
