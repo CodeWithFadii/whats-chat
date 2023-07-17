@@ -34,10 +34,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application
   //
-  getToken() async {
-    final token = await FirebaseMessaging.instance.getToken();
-    print(token);
-  }
+  // getToken() async {
+  //   final token = await FirebaseMessaging.instance.getToken();
+  //   print(token);
+  // }
 
   void init() {
     WidgetsBinding.instance.addPostFrameCallback((_) {

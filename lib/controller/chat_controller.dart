@@ -29,7 +29,6 @@ class ChatController extends GetxController {
           .then((value) {
         friendToken = value['fcm_token'];
       });
-
       chats
           .where('users', isEqualTo: {currentUserID: null, friendId: null})
           .limit(1)
@@ -41,12 +40,12 @@ class ChatController extends GetxController {
                 .get();
             if (snapshot.docs.isNotEmpty) {
               chatID.value = snapshot.docs.single.id;
-              getChatIDloading(false);
               Get.to(() => ChatScreen(
                     userName: doc['username'],
                     friendToken: friendToken,
                     friendName: friendUserName,
                   ));
+              getChatIDloading(false);
             } else {
               chats.add({
                 'users': {currentUserID: null, friendId: null},
@@ -54,12 +53,15 @@ class ChatController extends GetxController {
                 'friend_name': friendUserName,
                 'user_name': doc['username'],
                 'friend_id': friendId,
+                'user_typing': false,
+                'friend_typing': false,
                 'user_id': doc['id'],
                 'createdAT': null,
                 'last_msg': ''
               }).then((value) => {
                     chatID.value = value.id,
                   });
+              getChatIDloading(false);
               Get.to(() => ChatScreen(
                     userName: doc['username'],
                     friendToken: friendToken,
@@ -67,7 +69,6 @@ class ChatController extends GetxController {
                   ));
             }
           });
-      getChatIDloading(false);
     } on Exception {
       VxToast.show(context, msg: 'Check your internet connection or try again');
     }
@@ -82,6 +83,33 @@ class ChatController extends GetxController {
           .orderBy('createdAT', descending: true)
           .snapshots();
     }
+  }
+
+  getReminderMessages() {
+    return firebaseFirestore
+        .collection(collectionChats)
+        .doc(chatID.value)
+        .snapshots();
+  }
+
+  handleTyping(DocumentSnapshot snapshot) {
+    final currentUserID = FirebaseAuth.instance.currentUser!.uid;
+    return snapshot['user_id'] == currentUserID
+        ? snapshot['friend_typing']
+            ? 'Typing...'
+            : ''
+        : snapshot['user_typing']
+            ? 'Typing...'
+            : '';
+  }
+
+  updateTyping() {
+    FirebaseFirestore.instance
+        .collection(collectionChats)
+        .doc(chatID.value)
+        .update(
+      {'user_typing': messageController.text.isEmpty ? false : true},
+    );
   }
 
   sendMessage(String msg, String chatId) {

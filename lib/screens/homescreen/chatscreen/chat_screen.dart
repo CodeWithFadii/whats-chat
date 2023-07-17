@@ -11,24 +11,61 @@ import 'package:watts_clone/controller/home_controller.dart';
 import 'package:watts_clone/fcm_service/send_method.dart';
 import 'package:watts_clone/screens/homescreen/chatscreen/chatbubble.dart';
 
-class ChatScreen extends StatelessWidget {
-  ChatScreen({
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({
     super.key,
     required this.userName,
     required this.friendToken,
     required this.friendName,
   });
-  final chatController = Get.find<ChatController>();
   final String userName;
   final String friendName;
   final String friendToken;
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  final chatController = Get.find<ChatController>();
   final currentUserID = user!.uid;
+
+  @override
+  void initState() {
+    super.initState();
+    chatController.messageController.addListener(chatController.updateTyping());
+  }
+
+  @override
+  void dispose() {
+    chatController.messageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
       appBar: AppBar(
         elevation: 0,
+        title: Obx(
+          () => StreamBuilder(
+            stream: chatController.getReminderMessages(),
+            builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+              return !snapshot.hasData
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Text(
+                      chatController.handleTyping(snapshot.data!),
+                      style: const TextStyle(
+                          color: grey,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 16),
+                    );
+            },
+          ),
+        ),
         leading: const Icon(
           Icons.arrow_back,
         ).onTap(() {
@@ -55,7 +92,7 @@ class ChatScreen extends StatelessWidget {
                 children: [
                   Text.rich(TextSpan(children: [
                     TextSpan(
-                      text: friendName,
+                      text: widget.friendName,
                       style: const TextStyle(
                           color: black,
                           fontSize: 22,
@@ -87,35 +124,30 @@ class ChatScreen extends StatelessWidget {
               ),
             ),
             10.heightBox,
-            Obx(() {
-              return chatController.getChatIDloading.value
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.green,
-                      ),
-                    )
-                  : Expanded(
-                      child: StreamBuilder(
-                        //from ProfileService we getting all chats here
-                        stream: chatController
-                            .getMessages(chatController.chatID.value),
-                        builder:
-                            ((context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          return !snapshot.hasData
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : ListView(
-                                  reverse: true,
-                                  children: snapshot.data!.docs
-                                      .mapIndexed((currentValue, index) {
-                                    var docs = snapshot.data!.docs[index];
-                                    return chatBubbleWidget(docs);
-                                  }).toList());
-                        }),
-                      ),
-                    );
-            }),
+            Obx(
+              () {
+                return Expanded(
+                  child: StreamBuilder(
+                    //from ProfileService we getting all chats here
+                    stream:
+                        chatController.getMessages(chatController.chatID.value),
+                    builder: ((context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      return !snapshot.hasData
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : ListView(
+                              reverse: true,
+                              children: snapshot.data!.docs
+                                  .mapIndexed((currentValue, index) {
+                                var docs = snapshot.data!.docs[index];
+                                return chatBubbleWidget(docs);
+                              }).toList());
+                    }),
+                  ),
+                );
+              },
+            ),
             Container(
               color: black,
               height: 65,
@@ -137,8 +169,8 @@ class ChatScreen extends StatelessWidget {
                         SendMethod.sendNotification(
                             HomeController.instance.username.value,
                             chatController.messageController.text,
-                            friendToken,
-                            userName,
+                            widget.friendToken,
+                            widget.userName,
                             user!.uid);
                       }
                     },
