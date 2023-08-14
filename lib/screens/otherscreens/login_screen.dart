@@ -74,10 +74,13 @@ class _LoginscreenState extends State<Loginscreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  //lets connect
-                                  locale!.letsconnect,
-                                  style: kloginStyle,
+                                Expanded(
+                                  child: Text(
+                                    //lets connect
+                                    locale!.letsconnect,
+                                    style: kloginStyle,
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
                               ],
                             ),
@@ -109,6 +112,7 @@ class _LoginscreenState extends State<Loginscreen> {
                                       }
                                       return null;
                                     },
+                                    labelText: locale.phonenumber,
                                     textEditingController:
                                         authController.phonenumberC,
                                     hintText: '123456789',
@@ -151,10 +155,12 @@ class _LoginscreenState extends State<Loginscreen> {
                                     validator: (value) {
                                       return null;
                                     },
-                                    labelText: 'Verification code',
+                                    //verification code
+                                    labelText: locale.verificationcode,
                                     icon: Icons.message,
                                     prefixText: '',
-                                    hintText: 'Enter Varification code',
+                                    //enter verification code
+                                    hintText: locale.entercode,
                                     textEditingController: authController.otpC,
                                   ),
                                 );
@@ -179,7 +185,7 @@ class _LoginscreenState extends State<Loginscreen> {
                                         });
                                       }
                                     },
-                                    text: 'SEND OTP AGAIN    $start',
+                                    text: '${locale.sendoptagain}    $start',
                                   )
                                 : Container()
                           ],
@@ -188,8 +194,10 @@ class _LoginscreenState extends State<Loginscreen> {
                           padding: const EdgeInsets.only(bottom: 50),
                           child: MaterialbuttonWidget(
                             text: authController.isOTPsent.value == false
-                                ? 'GET OTP'
-                                : 'VERIFY OTP',
+                                //getotp
+                                ? locale.getotp
+                                //verifyotp
+                                : locale.verifyotp,
                             onPressed: () async {
                               //verifying textfields were not empty
 

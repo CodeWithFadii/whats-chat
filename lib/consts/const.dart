@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'app_theme.dart';
 
+List<String> listfeatures(AppLocalizations? locale) {
+  final listOfFeatures = [
+    locale!.fast,
+    locale.powerful,
+    locale.secure,
+    locale.private,
+    locale.unlimited,
+    locale.synced,
+    locale.reliable,
+  ];
+  return listOfFeatures;
+}
 
- List<String> listfeatures(AppLocalizations? locale) {
-    final listOfFeatures = [
-      locale!.fast,
-      locale.powerful,
-      locale.secure,
-      locale.private,
-      locale.unlimited,
-      locale.synced,
-      locale.reliable,
-    ];
-    return listOfFeatures;
-  }
 const String splash = '/';
 const isUser =
     'https://www.clipartmax.com/png/middle/424-4242023_fa-user-circle-icon.png';
@@ -32,4 +33,11 @@ const List<Locale> supportedLocals = [
   Locale('es'),
   Locale('fr'),
   Locale('ur'),
+];
+
+const localizationsDelegates = [
+  AppLocalizations.delegate,
+  GlobalMaterialLocalizations.delegate,
+  GlobalWidgetsLocalizations.delegate,
+  GlobalCupertinoLocalizations.delegate,
 ];

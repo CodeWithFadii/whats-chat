@@ -18,7 +18,7 @@ class WelcomeScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.all(10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -66,12 +66,15 @@ class WelcomeScreen extends StatelessWidget {
                 ],
               ),
               10.heightBox,
-              MaterialbuttonWidget(
-                onPressed: () {
-                  Get.to(() => const Loginscreen());
-                },
-                //start messaging
-                text: locale.startmessaging,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: MaterialbuttonWidget(
+                  onPressed: () {
+                    Get.to(() => const Loginscreen());
+                  },
+                  //start messaging
+                  text: locale.startmessaging,
+                ),
               ),
             ],
           ),

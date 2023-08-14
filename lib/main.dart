@@ -1,14 +1,12 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/controller/chat_controller.dart';
 import 'package:watts_clone/controller/language_controller.dart';
 import 'package:watts_clone/fcm_service/fcm_provider.dart';
 import 'package:watts_clone/fcm_service/firebase_service.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:watts_clone/screens/otherscreens/splash_screen.dart';
 import 'consts/app_theme.dart';
 
@@ -37,24 +35,19 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     Get.put(ChatController());
     FCMProvider.navigateWhenBackground(context);
-    FCMProvider.navigateWhenTerminated(widget.message, context); 
+    FCMProvider.navigateWhenTerminated(widget.message, context);
     // FCMProvider.getToken();
   }
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     final controller = Get.find<LanguageController>();
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
     return Obx(
       () => GetMaterialApp(
         locale: controller.locale.value,
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
+        localizationsDelegates: localizationsDelegates,
         supportedLocales: supportedLocals,
         debugShowCheckedModeBanner: false,
         theme: lightThemeData(context),

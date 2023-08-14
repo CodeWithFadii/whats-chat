@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:watts_clone/consts/const.dart';
@@ -55,6 +55,7 @@ class _JoinAgainState extends State<JoinAgain> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -70,12 +71,15 @@ class _JoinAgainState extends State<JoinAgain> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            Row(
                               children: [
-                                Text(
-                                  "Join Again",
-                                  style: kloginStyle,
+                                Expanded(
+                                  child: Text(
+                                    //join again
+                                    locale!.joinagain,
+                                    style: kloginStyle,
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
                               ],
                             ),
@@ -89,10 +93,12 @@ class _JoinAgainState extends State<JoinAgain> {
                                   TextFeildWidget(
                                     validator: (value) {
                                       if (value!.isEmpty || value.length < 9) {
-                                        return 'Please enter a valid number';
+                                        //enter valid number
+                                        return locale.pleaseentervalid;
                                       }
                                       return null;
                                     },
+                                    labelText: locale.phonenumber,
                                     textEditingController:
                                         authController.phonenumberC,
                                     hintText: '123456789',
@@ -106,7 +112,8 @@ class _JoinAgainState extends State<JoinAgain> {
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 45),
-                              child: weWill.text
+                              //we will send code
+                              child: locale.wewillsend.text
                                   .color(grey.shade600)
                                   .size(15)
                                   .make(),
@@ -119,7 +126,10 @@ class _JoinAgainState extends State<JoinAgain> {
                               child: Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 45),
-                                child: notHave.text.bold.size(15).make(),
+                                //not have account
+                                child: locale.nothaveaccount.text.bold
+                                    .size(15)
+                                    .make(),
                               ),
                             ),
                             13.heightBox,
@@ -128,13 +138,15 @@ class _JoinAgainState extends State<JoinAgain> {
                                 return Visibility(
                                   visible: authController.isOTPsent.value,
                                   child: TextFeildWidget(
-                                    labelText: 'Verification code',
+                                    //verification code
+                                    labelText: locale.verificationcode,
                                     validator: (value) {
                                       return null;
                                     },
                                     icon: Icons.message,
                                     prefixText: '',
-                                    hintText: 'Enter Varification code',
+                                    //enter verification code
+                                    hintText: locale.entercode,
                                     textEditingController: authController.otpC,
                                   ),
                                 );
@@ -157,7 +169,8 @@ class _JoinAgainState extends State<JoinAgain> {
                                         });
                                       }
                                     },
-                                    text: 'SEND OTP AGAIN    $start',
+                                    //send otp again
+                                    text: '${locale.sendoptagain}    $start',
                                   )
                                 : Container()
                           ],
@@ -166,8 +179,10 @@ class _JoinAgainState extends State<JoinAgain> {
                           padding: const EdgeInsets.only(bottom: 50),
                           child: MaterialbuttonWidget(
                             text: authController.isOTPsent.value == false
-                                ? 'GET OTP'
-                                : 'VERIFY OTP',
+                                //getotp
+                                ? locale.getotp
+                                //verify otp
+                                : locale.verifyotp,
                             onPressed: () async {
                               //verifying textfields were not empty
 
