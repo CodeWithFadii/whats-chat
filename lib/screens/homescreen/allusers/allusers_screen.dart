@@ -6,7 +6,6 @@ import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/consts/auth_const.dart';
 import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/controller/chat_controller.dart';
-import 'package:watts_clone/services/profile_service.dart';
 
 class AllUsers extends StatelessWidget {
   final chatC = Get.put(ChatController());
@@ -31,8 +30,10 @@ class AllUsers extends StatelessWidget {
           ),
         ),
         child: StreamBuilder(
-          // from profile service
-          stream: ProfileService.getallUsers(),
+          stream: firebaseFirestore
+              .collection(collectionUser)
+              .where('id', isNotEqualTo: user!.uid)
+              .snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             return !snapshot.hasData
                 ? const Center(child: CircularProgressIndicator())

@@ -1,14 +1,5 @@
 import 'package:flutter/material.dart';
 
-const listOfFeatures = [
-  "Fast",
-  "Powerful",
-  "Secure",
-  "Private",
-  "Unlimited",
-  "Synced",
-  "Reliable"
-];
 const drawerTextList = [
   "Account",
   "Friends",

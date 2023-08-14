@@ -1,0 +1,53 @@
+
+{
+
+  "@_Auth": {},
+
+  "fast": "Rápido",
+  "powerful": "Potente",
+  "secure": "Seguro",
+  "unlimited": "Ilimitado",
+  "synced": "Sincronizado",
+  "reliable": "Confiable",
+  "private": "Privado",
+  "joinrevolution": "únete a la revolución hoy",
+  "startmessaging": "Comenzar a Mensajear",
+  "letsconnect": "Conectémonos",
+  "username": "Nombre de Usuario",
+  "phonenumber": "Número de Teléfono",
+  "wewillsend": "Enviaremos un código de verificación a tu número para la autenticación.",
+  "alreadyhaveaccount": "¿Ya tienes una cuenta?",
+  "getotp": "OBTENER CÓDIGO OTP",
+  "joinagain": "Unirse de Nuevo",
+  "nothaveaccount": "¿No tienes una cuenta?",
+  "pleaseentervalid": "Por favor ingresa un número válido",
+  "loggedin": "Conectado",
+
+    "@_Home": {},
+
+    "connectinglives": "conectando vidas...",
+    "chats": "Chats",
+    "status": "Estado",
+    "camera": "Cámara",
+    "settings": "Configuración",
+    "account": "Cuenta",
+    "friends": "Amigos",
+    "invitefriend": "Invitar Amigo",
+    "logout": "Cerrar sesión",
+    "entermessagehere": "Ingresa tu mensaje aquí...",
+    "mystatus": "Mi Estado",
+    "taptoaddstatus": "Toca para agregar estado",
+    "recentupdates": "Actualizaciones Recientes",
+    "tuesday": "Martes",
+    "profile": "Perfil",
+    "save": "Guardar",
+    "name": "Nombre",
+    "about": "Acerca de",
+    "phone": "Teléfono",
+    "thisisnotusername": "Este no es tu nombre de usuario ni tu PIN. Este nombre será visible para tus amigos en Chats",
+    "allusers": "Todos los Usuarios",
+    "chatnow": "Chatear Ahora"
+
+
+  
+}

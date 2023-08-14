@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/consts/strings.dart';
 import 'package:watts_clone/widgets/materialbuttonwidget.dart';
 import 'login_screen.dart';
@@ -10,6 +12,8 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    List<String> listOfFeatures = listfeatures(locale);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -41,33 +45,33 @@ class WelcomeScreen extends StatelessWidget {
                       listOfFeatures.length,
                       (index) {
                         return Chip(
-                            padding: const EdgeInsets.all(10),
-                            label: listOfFeatures[index]
-                                .text
-                                .semiBold
-                                .color(grey.shade700)
-                                .size(17)
-                                .make());
+                          padding: const EdgeInsets.all(10),
+                          label: listOfFeatures[index]
+                              .text
+                              .semiBold
+                              .color(grey.shade700)
+                              .size(17)
+                              .make(),
+                        );
                       },
                     ),
                   ),
                   15.heightBox,
-                  slogan.text.size(42).letterSpacing(2).bold.make()
+                  //join revolution
+                  locale!.joinrevolution.text
+                      .size(42)
+                      .letterSpacing(2)
+                      .bold
+                      .make()
                 ],
               ),
-              Column(
-                children: [
-                  10.heightBox,
-                  MaterialbuttonWidget(
-                    onPressed: () {
-                      Get.to(() => const Loginscreen());
-                    },
-                    text: 'Start Messaging',
-                  ),
-                  10.heightBox,
-                  poweredby.text.color(grey.shade500).make(),
-                  5.heightBox
-                ],
+              10.heightBox,
+              MaterialbuttonWidget(
+                onPressed: () {
+                  Get.to(() => const Loginscreen());
+                },
+                //start messaging
+                text: locale.startmessaging,
               ),
             ],
           ),

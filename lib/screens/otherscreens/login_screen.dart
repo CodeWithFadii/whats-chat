@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:watts_clone/consts/const.dart';
@@ -17,8 +17,6 @@ class Loginscreen extends StatefulWidget {
   @override
   State<Loginscreen> createState() => _LoginscreenState();
 }
-
-
 
 class _LoginscreenState extends State<Loginscreen> {
   final authController = Get.put(AuthController());
@@ -57,6 +55,7 @@ class _LoginscreenState extends State<Loginscreen> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -72,11 +71,12 @@ class _LoginscreenState extends State<Loginscreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Let's Connect",
+                                  //lets connect
+                                  locale!.letsconnect,
                                   style: kloginStyle,
                                 ),
                               ],
@@ -94,7 +94,8 @@ class _LoginscreenState extends State<Loginscreen> {
                                     },
                                     textEditingController:
                                         authController.usernameC,
-                                    labelText: 'User Name',
+                                    //username
+                                    labelText: locale.username,
                                     icon: Icons.manage_accounts,
                                     hintText: 'eg.Haroon',
                                     prefixText: '',
@@ -103,7 +104,8 @@ class _LoginscreenState extends State<Loginscreen> {
                                   TextFeildWidget(
                                     validator: (value) {
                                       if (value!.isEmpty || value.length < 9) {
-                                        return 'Please enter a valid number';
+                                        //please enter valid number
+                                        return locale.pleaseentervalid;
                                       }
                                       return null;
                                     },
@@ -120,7 +122,8 @@ class _LoginscreenState extends State<Loginscreen> {
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 45),
-                              child: weWill.text
+                              //we will send code
+                              child: locale.wewillsend.text
                                   .color(grey.shade600)
                                   .size(15)
                                   .make(),
@@ -133,7 +136,10 @@ class _LoginscreenState extends State<Loginscreen> {
                               child: Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 45),
-                                child: already.text.bold.size(15).make(),
+                                //already have account
+                                child: locale.alreadyhaveaccount.text.bold
+                                    .size(15)
+                                    .make(),
                               ),
                             ),
                             13.heightBox,

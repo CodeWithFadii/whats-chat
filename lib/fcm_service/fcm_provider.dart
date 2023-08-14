@@ -5,7 +5,9 @@ import 'package:firebase_messaging/firebase_messaging.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:watts_clone/consts/auth_const.dart';
 import 'package:watts_clone/fcm_service/firebase_service.dart';
+import 'package:watts_clone/screens/otherscreens/welcome_screen.dart';
 import '../controller/chat_controller.dart';
 
 class FCMProvider with ChangeNotifier {
@@ -58,4 +60,48 @@ class FCMProvider with ChangeNotifier {
   }
 
   static Future<void> backgroundHandler(RemoteMessage message) async {}
+
+//navigate user ontapping nitification when app on background
+  static navigateWhenBackground(context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FCMProvider.setContext(context);
+    });
+    Stream<RemoteMessage> stream = FirebaseMessaging.onMessageOpenedApp;
+    stream.listen(
+      (RemoteMessage event) async {
+        if (user != null) {
+          ChatController chatC = Get.put(ChatController());
+          chatC.getChatID(
+              friendId: event.data['friend_id'],
+              friendUserName: event.data['friend_name'],
+              context: context);
+        } else {
+          Get.to(() => const WelcomeScreen());
+        }
+      },
+    );
+  }
+
+//navigate user ontapping nitification when app terminated
+  static navigateWhenTerminated(RemoteMessage? message, context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) async {
+        if (message != null) {
+          if (user != null) {
+            chatC.getChatID(
+                friendId: message.data['friend_id'],
+                friendUserName: message.data['friend_name'],
+                context: context);
+          } else {
+            Get.to(() => const WelcomeScreen());
+          }
+        }
+      },
+    );
+  }
+
+  static getToken() async {
+    final token = await FirebaseMessaging.instance.getToken();
+    print(token);
+  }
 }
