@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
         length: 3,
         child: Scaffold(
           key: scaffoldKey,
-          drawer: drawerWidget(),
+          drawer: const DrawerWidget(),
           floatingActionButton: FloatingActionButton(
             backgroundColor: grey,
             onPressed: () {
@@ -37,12 +37,14 @@ class HomeScreen extends StatelessWidget {
           backgroundColor: black,
           body: Column(
             children: [
-              appBarWidget(scaffoldKey),
+              AppBarWidget(
+                keyGlobal: scaffoldKey,
+              ),
               Expanded(
                 child: Column(
                   children: [
-                    tabbarWidget(),
-                    tabbarViewWidget(),
+                    const TabbarWidget(), 
+                    TabViewWidget(),
                   ],
                 ),
               )

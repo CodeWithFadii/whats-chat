@@ -21,30 +21,31 @@ class ChatBubbleComponent extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       elevation: 10,
       child: ListTile(
-          onTap: () {
-            chatC.getChatID(
-                friendId: user!.uid == docs['user_id']
-                    ? docs['friend_id']
-                    : docs['user_id'],
-                friendUserName: user!.uid == docs['user_id']
-                    ? docs['friend_name']
-                    : docs['user_name'],
-                context: context);
-          },
-          title: Text(
-            user!.uid == docs['user_id']
-                ? docs['friend_name']
-                : docs['user_name'],
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-          subtitle: Text(
-            '${docs['last_msg']}',
-            maxLines: 1,
-          ),
-          trailing: Directionality(
-            textDirection: TextDirection.ltr,
-            child: intl.DateFormat('h:m a').format(dateTime).text.make(),
-          )),
+        onTap: () {
+          chatC.getChatID(
+              friendId: user!.uid == docs['user_id']
+                  ? docs['friend_id']
+                  : docs['user_id'],
+              friendUserName: user!.uid == docs['user_id']
+                  ? docs['friend_name']
+                  : docs['user_name'],
+              context: context);
+        },
+        title: Text(
+          user!.uid == docs['user_id']
+              ? docs['friend_name']
+              : docs['user_name'],
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        subtitle: Text(
+          '${docs['last_msg']}',
+          maxLines: 1,
+        ),
+        trailing: Directionality(
+          textDirection: TextDirection.ltr,
+          child: intl.DateFormat('h:m a').format(dateTime).text.make(),
+        ),
+      ),
     );
   }
 }

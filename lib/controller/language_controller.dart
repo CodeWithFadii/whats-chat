@@ -3,17 +3,25 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageController extends GetxController {
-  var locale = const Locale('en').obs;
+  var locale = const Locale('ur').obs;
 
-   
-  void changeLanguage(Locale languageValue) async {
+  changeLanguage(Locale languageValue) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
+
     if (languageValue == const Locale('en')) {
       locale.value = languageValue;
       sp.setString('language_value', 'en');
-    } else {
+    }
+    if (languageValue == const Locale('es')) {
       locale.value = languageValue;
       sp.setString('language_value', 'es');
+    }
+    if (languageValue == const Locale('fr')) {
+      locale.value = languageValue;
+      sp.setString('language_value', 'fr');
+    } else {
+      locale.value = languageValue;
+      sp.setString('language_value', 'ur');
     }
   }
 

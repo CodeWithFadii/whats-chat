@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
     return Obx(
-      () => GetMaterialApp(
+      () =>  GetMaterialApp(
         locale: controller.locale.value,
         localizationsDelegates: localizationsDelegates,
         supportedLocales: supportedLocals,

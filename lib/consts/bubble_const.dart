@@ -17,5 +17,4 @@ final  ktextfielddeco = InputDecoration(
     suffixIcon: const Icon(Icons.attach_file),
     prefixIcon: const Icon(Icons.emoji_emotions),
     filled: true,
-    fillColor: white,
-    hintText: 'Enter your message here...');
+    fillColor: white,);

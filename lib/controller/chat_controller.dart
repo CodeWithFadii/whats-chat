@@ -104,12 +104,14 @@ class ChatController extends GetxController {
   }
 
   updateTyping() {
-    FirebaseFirestore.instance
-        .collection(collectionChats)
-        .doc(chatID.value)
-        .update(
-      {'user_typing': messageController.text.isEmpty ? false : true},
-    );
+    if (chatID.value.isNotEmpty) {
+      return FirebaseFirestore.instance
+          .collection(collectionChats)
+          .doc(chatID.value)
+          .update(
+        {'user_typing': messageController.text.isNotEmpty ? true : false},
+      );
+    }
   }
 
   sendMessage(String msg, String chatId) {

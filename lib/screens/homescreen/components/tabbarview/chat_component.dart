@@ -5,9 +5,14 @@ import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/controller/home_controller.dart';
 import 'package:watts_clone/screens/homescreen/components/chatbubble_component.dart';
 
-Widget chatInfoWidget() {
-  var controller = Get.put(HomeController());
-  return Container(
+
+class ChatInfoWidget extends StatelessWidget {
+   ChatInfoWidget({super.key});
+final controller = Get.put(HomeController());
+  @override
+  Widget build(BuildContext context) {
+    
+    return Container(
     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
     child: StreamBuilder(
       stream: controller.getReminderMessages(),
@@ -37,4 +42,5 @@ Widget chatInfoWidget() {
       }),
     ),
   );
+  }
 }

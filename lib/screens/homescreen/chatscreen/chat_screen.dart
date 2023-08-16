@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:watts_clone/consts/auth_const.dart';
 import 'package:watts_clone/consts/bubble_const.dart';
 import 'package:watts_clone/consts/const.dart';
@@ -33,13 +34,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    chatController.messageController.addListener(chatController.updateTyping());
-  }
-
-  @override
-  void dispose() {
-    chatController.messageController.dispose();
-    super.dispose();
+    chatController.messageController.addListener(() {});
   }
 
   @override
@@ -90,15 +85,19 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text.rich(TextSpan(children: [
+                  Text.rich(
                     TextSpan(
-                      text: widget.friendName,
-                      style: const TextStyle(
-                          color: black,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w600),
+                      children: [
+                        TextSpan(
+                          text: widget.friendName,
+                          style: const TextStyle(
+                              color: black,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
                     ),
-                  ])),
+                  ),
                   Row(
                     children: [
                       const CircleAvatar(
@@ -138,11 +137,13 @@ class _ChatScreenState extends State<ChatScreen> {
                             )
                           : ListView(
                               reverse: true,
-                              children: snapshot.data!.docs
-                                  .mapIndexed((currentValue, index) {
-                                var docs = snapshot.data!.docs[index];
-                                return chatBubbleWidget(docs);
-                              }).toList());
+                              children: snapshot.data!.docs.mapIndexed(
+                                (currentValue, index) {
+                                  var docs = snapshot.data!.docs[index];
+                                  return chatBubbleWidget(docs);
+                                },
+                              ).toList(),
+                            );
                     }),
                   ),
                 );
@@ -155,10 +156,14 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: [
                   7.widthBox,
                   Expanded(
-                      child: TextField(
-                          controller: chatController.messageController,
-                          maxLines: 1,
-                          decoration: ktextfielddeco)),
+                    child: TextField(
+                      controller: chatController.messageController,
+                      maxLines: 1,
+                      decoration: ktextfielddeco.copyWith(
+                          hintText:
+                              AppLocalizations.of(context)!.entermessagehere),
+                    ),
+                  ),
                   10.widthBox,
                   GestureDetector(
                     onTap: () {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:io';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/consts/strings.dart';
 import 'package:watts_clone/controller/home_controller.dart';
@@ -16,12 +17,14 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: black,
       appBar: AppBar(
           elevation: 0,
-          title: 'Profile'.text.white.semiBold.size(23).make(),
+          // profile
+          title: locale?.profile.text.white.semiBold.size(23).make(),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 10),
@@ -37,7 +40,8 @@ class ProfileScreen extends StatelessWidget {
                     HomeController.instance.getuserData();
                   }
                 },
-                child: 'Save'.text.color(white).size(20).make(),
+                //save
+                child: locale!.save.text.color(white).size(20).make(),
               ),
             )
           ],
@@ -98,7 +102,7 @@ class ProfileScreen extends StatelessWidget {
                                 Icons.camera_alt_rounded,
                                 color: black,
                               ).onTap(() {
-                                Get.dialog(imagetoastWidget(context));
+                                Get.dialog(ImageToast());
                               }),
                             ),
                           )
@@ -122,10 +126,16 @@ class ProfileScreen extends StatelessWidget {
                       Icons.edit,
                       color: white,
                     ),
-                    label: 'Name'.text.color(grey).maxLines(2).size(20).make(),
+                    //name
+                    label: locale.name.text
+                        .color(grey)
+                        .maxLines(2)
+                        .size(20)
+                        .make(),
                     isDense: true),
               ),
-              subtitle: aboutText.text.color(grey).make(),
+              // This is not username
+              subtitle: locale.thisisnotusername.text.color(grey).make(),
             ),
             10.heightBox,
             ListTile(
@@ -140,7 +150,8 @@ class ProfileScreen extends StatelessWidget {
                     Icons.edit,
                     color: white,
                   ),
-                  label: 'About'.text.color(grey).semiBold.size(20).make(),
+                  //about
+                  label: locale.about.text.color(grey).semiBold.size(20).make(),
                   isDense: true,
                 ),
               ),
@@ -155,7 +166,8 @@ class ProfileScreen extends StatelessWidget {
                 cursorColor: white,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  label: 'Phone'.text.color(grey).semiBold.size(20).make(),
+                  //phone
+                  label: locale.phone.text.color(grey).semiBold.size(20).make(),
                   isDense: true,
                 ),
               ),
