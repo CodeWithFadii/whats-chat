@@ -36,6 +36,7 @@
     "account": "Account",
     "friends": "Friends",
     "invitefriend": "Invite Friend",
+    "language": "Language",
     "logout": "Logout",
     "loggedout": "Loggedout",
     "selectimage": "Select Image",

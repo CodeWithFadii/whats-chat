@@ -6,12 +6,13 @@ import 'package:watts_clone/consts/const.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:watts_clone/consts/strings.dart';
 import 'package:watts_clone/controller/home_controller.dart';
+import 'package:watts_clone/controller/language_controller.dart';
 import 'package:watts_clone/screens/otherscreens/welcome_screen.dart';
 import 'package:watts_clone/screens/homescreen/profilescreen/profile_screen.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({super.key});
-
+  DrawerWidget({super.key});
+  final languageC = Get.find<LanguageController>();
   @override
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context);
@@ -29,9 +30,11 @@ class DrawerWidget extends StatelessWidget {
                 leading: const Icon(
                   Icons.keyboard_return,
                   color: white,
-                ).onTap(() {
-                  Get.back();
-                }),
+                ).onTap(
+                  () {
+                    Get.back();
+                  },
+                ),
                 //settings
                 title: locale!.settings.text.white.size(22).make(),
               ),
@@ -74,11 +77,30 @@ class DrawerWidget extends StatelessWidget {
               const Divider(height: 1, color: white),
               10.heightBox,
               ListTile(
+                leading: const Icon(Icons.language, color: white),
+                trailing: DropdownButton(
+                  dropdownColor: Colors.white,
+                  icon: const Icon(Icons.more_horiz_outlined, color: white),
+                  items: ['English', 'Spanish', 'Urdu', 'French']
+                      .map(
+                        (e) => DropdownMenuItem<String>(
+                          child: e.text.black.size(16).make(),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: languageChangeMethod,
+                ),
+                //Language
+                title: locale.language.text.white.size(16).make(),
+              ),
+              10.heightBox,
+              ListTile(
                 onTap: () {},
                 leading: const Icon(Icons.people, color: white),
                 //invite friend
                 title: locale.invitefriend.text.white.size(16).make(),
               ),
+
               const Spacer(),
               ListTile(
                 onTap: () async {
@@ -99,5 +121,21 @@ class DrawerWidget extends StatelessWidget {
         }),
       ),
     );
+  }
+
+  void languageChangeMethod(value) {
+    switch (value) {
+      case 'English':
+        languageC.locale.value = const Locale('eg');
+        break;
+      case 'Spanish':
+        languageC.locale.value = const Locale('es');
+        break;
+      case 'Urdu':
+        languageC.locale.value = const Locale('ur');
+        break;
+      case 'French':
+        languageC.locale.value = const Locale('fr');
+    }
   }
 }

@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
         length: 3,
         child: Scaffold(
           key: scaffoldKey,
-          drawer: const DrawerWidget(),
+          drawer:  DrawerWidget(),
           floatingActionButton: FloatingActionButton(
             backgroundColor: grey,
             onPressed: () {
