@@ -34,6 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     return AnimatedSplashScreen(
       nextScreen: isLogin ? HomeScreen() : const WelcomeScreen(),
       splash: 'assets/images/logo.png',

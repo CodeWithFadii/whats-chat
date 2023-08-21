@@ -50,6 +50,7 @@ dependencies:
   flutter_local_notifications: ^15.1.0+1
   firebase_messaging: ^14.6.2
   dio: ^5.1.2
+  country_code_picker: ^3.0.0
   flutter_localizations:
     sdk: flutter
 

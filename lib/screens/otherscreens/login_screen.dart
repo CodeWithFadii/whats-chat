@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'dart:developer';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:watts_clone/consts/app_theme.dart';
 import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/consts/strings.dart';
 import 'package:watts_clone/controller/auth_controller.dart';
@@ -21,7 +22,7 @@ class Loginscreen extends StatefulWidget {
 class _LoginscreenState extends State<Loginscreen> {
   final authController = Get.put(AuthController());
   Timer? timer;
-  int start = 40;
+  int start = 0;
   @override
   void initState() {
     super.initState();
@@ -87,40 +88,35 @@ class _LoginscreenState extends State<Loginscreen> {
                             const SizedBox(
                               height: 20,
                             ),
-                            Form(
-                              key: authController.formKey,
-                              child: Column(
-                                children: [
-                                  TextFeildWidget(
-                                    validator: (value) {
-                                      return null;
-                                    },
-                                    textEditingController:
-                                        authController.usernameC,
-                                    //username
-                                    labelText: locale.username,
-                                    icon: Icons.manage_accounts,
-                                    hintText: 'eg.Haroon',
-                                    prefixText: '',
+                            Column(
+                              children: [
+                                TextFeildWidget(
+                                  textEditingController:
+                                      authController.usernameC,
+                                  //username
+                                  labelText: locale.username,
+                                  icon: const Icon(
+                                    Icons.person,
+                                    color: kPrimaryColor,
                                   ),
-                                  12.heightBox,
-                                  TextFeildWidget(
-                                    validator: (value) {
-                                      if (value!.isEmpty || value.length < 9) {
-                                        //please enter valid number
-                                        return locale.pleaseentervalid;
-                                      }
-                                      return null;
+                                  hintText: 'eg.Haroon',
+                                  prefixText: '',
+                                ),
+                                12.heightBox,
+                                TextFeildWidget(
+                                  icon: CountryCodePicker(
+                                    flagWidth: 25,
+                                    initialSelection: 'PK',
+                                    onChanged: (value) {
+                                      authController.countyCode(value.dialCode);
                                     },
-                                    labelText: locale.phonenumber,
-                                    textEditingController:
-                                        authController.phonenumberC,
-                                    hintText: '123456789',
-                                    textInputType: TextInputType.phone,
-                                    prefixText: '+92',
                                   ),
-                                ],
-                              ),
+                                  labelText: locale.phonenumber,
+                                  textEditingController:
+                                      authController.phonenumberC,
+                                  textInputType: TextInputType.phone,
+                                ),
+                              ],
                             ),
                             13.heightBox,
                             Padding(
@@ -132,7 +128,7 @@ class _LoginscreenState extends State<Loginscreen> {
                                   .size(15)
                                   .make(),
                             ),
-                            15.heightBox,
+                            20.heightBox,
                             GestureDetector(
                               onTap: () {
                                 Get.to(() => const JoinAgain());
@@ -146,82 +142,48 @@ class _LoginscreenState extends State<Loginscreen> {
                                     .make(),
                               ),
                             ),
-                            13.heightBox,
-                            Obx(
-                              () {
-                                return Visibility(
-                                  visible: authController.isOTPsent.value,
-                                  child: TextFeildWidget(
-                                    validator: (value) {
-                                      return null;
-                                    },
-                                    //verification code
-                                    labelText: locale.verificationcode,
-                                    icon: Icons.message,
-                                    prefixText: '',
-                                    //enter verification code
-                                    hintText: locale.entercode,
-                                    textEditingController: authController.otpC,
-                                  ),
-                                );
-                              },
+                            30.heightBox,
+                            Visibility(
+                              visible: authController.isOTPsent.value,
+                              child: TextFeildWidget(
+                                textInputType: TextInputType.number,
+                                //verification code
+                                labelText: locale.verificationcode,
+                                icon: const Icon(
+                                  Icons.message,
+                                ),
+                                prefixText: '',
+                                //enter verification code
+                                hintText: locale.entercode,
+                                textEditingController: authController.otpC,
+                              ),
                             ),
-                            20.heightBox,
-                            authController.isOTPsent.value
-                                ? MaterialbuttonWidget(
-                                    color:
-                                        start == 0 ? Colors.black : Colors.grey,
-                                    onPressed: () async {
-                                      if (start == 0) {
-                                        if (authController.formKey.currentState!
-                                                .validate() &&
-                                            authController
-                                                .usernameC.text.isNotEmpty) {
-                                          await authController.sentOTP(context);
-                                        }
-                                        setState(() {
-                                          start = 40;
-                                          startTimer();
-                                        });
-                                      }
-                                    },
-                                    text: '${locale.sendoptagain}    $start',
-                                  )
-                                : Container()
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 50),
-                          child: MaterialbuttonWidget(
-                            text: authController.isOTPsent.value == false
-                                //getotp
-                                ? locale.getotp
-                                //verifyotp
-                                : locale.verifyotp,
-                            onPressed: () async {
-                              //verifying textfields were not empty
-
-                              if (authController.formKey.currentState!
-                                      .validate() &&
-                                  authController.usernameC.text.isNotEmpty) {
-                                //verifying otp
-                                if (authController.isOTPsent.value == false) {
-                                  log(authController.phonenumberC.text);
-                                  setState(() {
-                                    startTimer();
-                                  });
-                                  authController.isOTPsent.value = true;
-                                  await authController.sentOTP(context);
-                                } else {
-                                  //sending OTP
-                                  await authController.verifyOTP();
-                                }
-                              } else {
-                                VxToast.show(context,
-                                    msg: 'Field are required');
-                              }
-                              // Get.off(() => HomeScreen());
-                            },
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              MaterialbuttonWidget(
+                                color: start == 0 ? Colors.black : Colors.grey,
+                                width: 150,
+                                text: start == 0
+                                    ? locale.getotp
+                                    : '${locale.getotp}    $start',
+                                onPressed: () async {
+                                  if (start == 0) {
+                                    getOtpOnTap(context);
+                                  }
+                                },
+                              ),
+                              25.widthBox,
+                              MaterialbuttonWidget(
+                                width: 150,
+                                text: locale.verifyotp,
+                                onPressed: verifyOtpOnTap,
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -231,5 +193,29 @@ class _LoginscreenState extends State<Loginscreen> {
         ),
       ),
     );
+  }
+
+  Future<void> getOtpOnTap(BuildContext context) async {
+    if (authController.usernameC.text.isEmpty ||
+        authController.phonenumberC.text.isEmpty) {
+      VxToast.show(context, msg: 'All  fields are required');
+      return;
+    }
+    authController.isOTPsent(true);
+    setState(() {
+      start = 60;
+      startTimer();
+    });
+    await authController.sentOTP(context);
+  }
+
+  Future<void> verifyOtpOnTap() async {
+    if (authController.usernameC.text.isEmpty ||
+        authController.phonenumberC.text.isEmpty ||
+        authController.otpC.text.isEmpty) {
+      VxToast.show(context, msg: 'All  fields are required');
+      return;
+    }
+    await authController.verifyOTP();
   }
 }

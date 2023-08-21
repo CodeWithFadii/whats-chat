@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'app_theme.dart';
 
 List<String> listfeatures(AppLocalizations? locale) {
@@ -41,3 +43,10 @@ const localizationsDelegates = [
   GlobalWidgetsLocalizations.delegate,
   GlobalCupertinoLocalizations.delegate,
 ];
+  getInitialLanguage() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    String language = sp.getString('language_value') ?? '';
+    if (language.isNotEmpty) {
+      Get.updateLocale(Locale(language));
+    }
+  }

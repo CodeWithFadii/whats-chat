@@ -2,41 +2,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LanguageController extends GetxController {
-  var locale = const Locale('ur').obs;
+class LanguageController {
+  // ignore: prefer_const_constructors
 
-  changeLanguage(Locale languageValue) async {
+  static changeLanguage(String languageValue) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
 
-    if (languageValue == const Locale('en')) {
-      locale.value = languageValue;
+    if (languageValue == 'English') {
+      Get.updateLocale(const Locale('en'));
       sp.setString('language_value', 'en');
-    }
-    if (languageValue == const Locale('es')) {
-      locale.value = languageValue;
+    } else if (languageValue == 'Spanish') {
+      Get.updateLocale(const Locale('es'));
       sp.setString('language_value', 'es');
-    }
-    if (languageValue == const Locale('fr')) {
-      locale.value = languageValue;
+    } else if (languageValue == 'French') {
+      Get.updateLocale(const Locale('fr'));
       sp.setString('language_value', 'fr');
     } else {
-      locale.value = languageValue;
+      Get.updateLocale(const Locale('ur'));
       sp.setString('language_value', 'ur');
     }
   }
 
-  void assignLanguage() async {
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    String language = sp.getString('language_value') ?? '';
+ 
 
-    if (language.isNotEmpty) {
-      locale.value = Locale(language);
-    }
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    assignLanguage();
-  }
+ 
 }

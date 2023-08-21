@@ -70,6 +70,7 @@ class ChatController extends GetxController {
             }
           });
     } on Exception {
+      // ignore: use_build_context_synchronously
       VxToast.show(context, msg: 'Check your internet connection or try again');
     }
   }

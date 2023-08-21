@@ -14,35 +14,21 @@ class AuthController extends GetxController {
   //initialize observable variable
   var isOTPsent = false.obs;
   var isloading = false.obs;
-  var formKey = GlobalKey<FormState>();
-  var joinagainformKey = GlobalKey<FormState>();
+  var countyCode = '+92'.obs;
   String verificationID = '';
   int token = 0;
 
   //sentOTP
   sentOTP(context) async {
+    print(countyCode);
     //phoneVerificationCompleted
     phoneVerificationCompleted(PhoneAuthCredential credential) async {
+      print('Auto Verification Completed');
       final User? user =
           (await firebaseAuth.signInWithCredential(credential)).user;
       //sending data to firebase
       if (user != null) {
-        DocumentReference store =
-            firebaseFirestore.collection(collectionUser).doc(user.uid);
-        await store.set(
-          {
-            'id': user.uid,
-            'username': usernameC.text.toString(),
-            'phonenumber': '+92${phonenumberC.text}',
-            'about': '',
-            'img_url': '',
-          },
-          SetOptions(merge: true),
-        );
-
-        Get.rawSnackbar(
-            message: 'Logged In', duration: const Duration(seconds: 4));
-        Get.offAll(() => HomeScreen(), transition: Transition.downToUp);
+        signupMethod(user);
       }
     }
 
@@ -55,6 +41,7 @@ class AuthController extends GetxController {
 
     //phoneCodeSent
     phoneCodeSent(String verificationId, int? resendToken) {
+      print(verificationId);
       verificationID = verificationId;
     }
 
@@ -66,14 +53,14 @@ class AuthController extends GetxController {
       isloading(true);
       //verifyPhoneNumber
       await FirebaseAuth.instance.verifyPhoneNumber(
-          phoneNumber: '+92${phonenumberC.text}',
+          phoneNumber: '${countyCode.value}${phonenumberC.text}',
           verificationCompleted: phoneVerificationCompleted,
           verificationFailed: phoneVerificationFailed,
           codeSent: phoneCodeSent,
           codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
       isloading(false);
     } catch (e) {
-      VxToast.show(context, msg: 'Please try again later');
+      VxToast.show(context, msg: 'Some Thing went wrong');
     }
   }
 
@@ -89,26 +76,12 @@ class AuthController extends GetxController {
           (await firebaseAuth.signInWithCredential(phoneAuthCredential)).user;
       //sending data to firebase
       if (user != null) {
-        DocumentReference store =
-            firebaseFirestore.collection(collectionUser).doc(user.uid);
-        await store.set(
-          {
-            'id': user.uid,
-            'username': usernameC.text.toString(),
-            'phonenumber': '+92${phonenumberC.text}',
-            'about': '',
-            'img_url': '',
-          },
-          SetOptions(merge: true),
-        );
-
-        Get.rawSnackbar(
-            message: 'Logged In', duration: const Duration(seconds: 4));
-        Get.offAll(() => HomeScreen(), transition: Transition.downToUp);
+        await signupMethod(user);
       }
       isloading(false);
     } catch (e) {
       isloading(false);
+      print(e.toString());
       Get.snackbar('Error in logging', e.toString(),
           duration: const Duration(seconds: 5));
     }
@@ -122,18 +95,9 @@ class AuthController extends GetxController {
       PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
           verificationId: verificationID, smsCode: otpC.text);
 
-      final User? user =
-          (await firebaseAuth.signInWithCredential(phoneAuthCredential)).user;
+      await firebaseAuth.signInWithCredential(phoneAuthCredential);
       //sending data to firebase
-      if (user != null) {
-        DocumentReference store =
-            firebaseFirestore.collection(collectionUser).doc(user.uid);
-        await store.update(
-          {
-            'id': user.uid,
-          },
-        );
-      }
+
       Get.rawSnackbar(
           message: 'Logged In', duration: const Duration(seconds: 4));
       Get.offAll(() => HomeScreen(), transition: Transition.downToUp);
@@ -144,5 +108,23 @@ class AuthController extends GetxController {
       Get.snackbar('Error in logging', e.toString(),
           duration: const Duration(seconds: 5));
     }
+  }
+
+  signupMethod(User user) async {
+    DocumentReference store =
+        firebaseFirestore.collection(collectionUser).doc(user.uid);
+    await store.set(
+      {
+        'id': user.uid,
+        'username': usernameC.text.toString(),
+        'phonenumber': '+92${phonenumberC.text}',
+        'about': '',
+        'img_url': '',
+      },
+      SetOptions(merge: true),
+    );
+
+    Get.rawSnackbar(message: 'Logged In', duration: const Duration(seconds: 4));
+    Get.offAll(() => HomeScreen(), transition: Transition.downToUp);
   }
 }

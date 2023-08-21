@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "852906028570",
+    "project_id": "watts-chat",
+    "storage_bucket": "watts-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852906028570:android:792b40a7daa1ef50662ba3",
+        "android_client_info": {
+          "package_name": "com.example.watts_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "852906028570-vr8uia1s7li9gg3ctkp7fcorbj5m3mtf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgkWjCiIXgUN6ML-M9wpNgsGUYiszaWUY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "852906028570-vr8uia1s7li9gg3ctkp7fcorbj5m3mtf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

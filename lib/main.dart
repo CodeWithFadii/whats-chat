@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/controller/chat_controller.dart';
-import 'package:watts_clone/controller/language_controller.dart';
 import 'package:watts_clone/fcm_service/fcm_provider.dart';
 import 'package:watts_clone/fcm_service/firebase_service.dart';
 import 'package:watts_clone/screens/otherscreens/splash_screen.dart';
@@ -13,7 +12,7 @@ import 'consts/app_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FirebaseService.initializeFirebase();
-  Get.put(LanguageController());
+  
   final RemoteMessage? message =
       await FirebaseService.firebaseMessaging.getInitialMessage();
   runApp(MyApp(
@@ -33,27 +32,26 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+     getInitialLanguage();
     Get.put(ChatController());
     FCMProvider.navigateWhenBackground(context);
     FCMProvider.navigateWhenTerminated(widget.message, context);
     // FCMProvider.getToken();
   }
 
+
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<LanguageController>();
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
-    return Obx(
-      () =>  GetMaterialApp(
-        locale: controller.locale.value,
-        localizationsDelegates: localizationsDelegates,
-        supportedLocales: supportedLocals,
-        debugShowCheckedModeBanner: false,
-        theme: lightThemeData(context),
-        themeMode: ThemeMode.system,
-        home: const SplashScreen(),
-      ),
+    return GetMaterialApp(
+      locale: Get.locale,
+      localizationsDelegates: localizationsDelegates,
+      supportedLocales: supportedLocals,
+      debugShowCheckedModeBanner: false,
+      theme: lightThemeData(context),
+      themeMode: ThemeMode.system,
+      home: const SplashScreen(),
     );
   }
 }

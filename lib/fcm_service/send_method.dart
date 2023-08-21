@@ -6,7 +6,7 @@ class SendMethod {
       String friendName, String friendId) async {
     String url = 'https://fcm.googleapis.com/fcm/send';
     String serverKey =
-        'AAAAVEnwmic:APA91bHL_o8HQBYcAiFs09p7-S30a_2CR4zmlpEXVIipsEJ4Qcj0gfBMMwDfZkugAamcbV2o6e9aHnzItdSfQPVWRyXy4NhzmFb5mFU2lhXPICbGm8J31vwhYO6_w56vXDLyGO9HBfnm';
+        'AAAAxpUpLho:APA91bFXx2fyr4ZM6eXH3EPbr1fn372mmpc0hDr7j70w3yhaxcMSPq7CI-gxQEuT0DPUdUapdfyYCuZaZn-wCtk9O1pjePfTrmy0gV1FMcBv2IUDKXTi1NFcK-cVdb2zQdcOytM3XQW7';
     try {
       await Dio().post(
         options: Options(
@@ -38,7 +38,7 @@ class SendMethod {
   static void eventNotification(String title, String body) async {
     String url = 'https://fcm.googleapis.com/fcm/send';
     String serverKey =
-        'AAAAq4_OuHQ:APA91bFt9RFwuFPM2kOE9ztUu5DhYsZEyEj9KKK5DG9769n1_InPalTJa0Nrs5sMDJbEvZd07uAlNZE7crpQUp_hOVp_BQQIF5h9ljwAl9v9jGq7UR6okJZ-ewzVEfvq3_t759oArfpP';
+        'AAAAxpUpLho:APA91bFXx2fyr4ZM6eXH3EPbr1fn372mmpc0hDr7j70w3yhaxcMSPq7CI-gxQEuT0DPUdUapdfyYCuZaZn-wCtk9O1pjePfTrmy0gV1FMcBv2IUDKXTi1NFcK-cVdb2zQdcOytM3XQW7';
     try {
       await Dio().post(
         options: Options(
