@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart' as intl;
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:watts_clone/consts/auth_const.dart';
@@ -18,10 +19,12 @@ class ChatScreen extends StatefulWidget {
     required this.userName,
     required this.friendToken,
     required this.friendName,
+    required this.friendID,
   });
   final String userName;
   final String friendName;
   final String friendToken;
+  final String friendID;
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -34,7 +37,15 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    chatController.messageController.addListener(() {});
+    bool isTyping = false;
+    chatController.messageController.addListener(() {
+      setState(() {
+        chatController.messageController.text.isNotEmpty
+            ? isTyping = true
+            : isTyping = false;
+      });
+      chatController.updateTyping(isTyping);
+    });
   }
 
   @override
@@ -85,18 +96,12 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: widget.friendName,
-                          style: const TextStyle(
-                              color: black,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ),
+                  Text(
+                    widget.friendName,
+                    style: const TextStyle(
+                        color: black,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600),
                   ),
                   Row(
                     children: [

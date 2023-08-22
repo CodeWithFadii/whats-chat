@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:get/get.dart';
+import 'package:watts_clone/consts/auth_const.dart';
+import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/screens/homescreen/home_screen.dart';
 import 'package:watts_clone/screens/otherscreens/welcome_screen.dart';
 
@@ -11,11 +14,15 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<Offset> _animation;
+  User? userID = FirebaseAuth.instance.currentUser;
+
   bool isLogin = false;
-  isloggedIn() {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
+  void isloggedIn() {
+    if (userID != null) {
       setState(() {
         isLogin = true;
       });
@@ -26,21 +33,49 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  void initMethod() {
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1200));
+    _animation =
+        Tween(begin: const Offset(2, 0), end: const Offset(0, 0)).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
+    );
+    _controller.forward();
+    isloggedIn();
+
+    Future.delayed(const Duration(milliseconds: 1500), () {
+    
+      isLogin
+          ? Get.offAll(() => HomeScreen())
+          : Get.offAll(() => const WelcomeScreen());
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    isloggedIn();
+    initMethod();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    
-    return AnimatedSplashScreen(
-      nextScreen: isLogin ? HomeScreen() : const WelcomeScreen(),
-      splash: 'assets/images/logo.png',
-      splashTransition: SplashTransition.slideTransition,
-      duration: 200,
-      splashIconSize: 250,
+    return Scaffold(
+      body: Center(
+        child: SlideTransition(
+          position: _animation,
+          child: Image.asset(
+            logo,
+            width: 240,
+            height: 240,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -32,20 +32,29 @@ class ChatBubbleComponent extends StatelessWidget {
               context: context);
         },
         title: Text(
-          user!.uid == docs['user_id']
-              ? docs['friend_name']
-              : docs['user_name'],
+          '${user!.uid == docs['user_id'] ? docs['friend_name'] : docs['user_name']}',
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         subtitle: Text(
-          '${docs['last_msg']}',
+          typingMethod() == '' ? '${docs['last_msg']}' : typingMethod(),
           maxLines: 1,
+          style: const TextStyle(fontStyle: FontStyle.italic),
         ),
         trailing: Directionality(
           textDirection: TextDirection.ltr,
-          child: intl.DateFormat('h:m a').format(dateTime).text.make(),
+          child: intl.DateFormat('h:mm a').format(dateTime).text.make(),
         ),
       ),
     );
+  }
+
+  typingMethod<String>() {
+    return docs['user_id'] == user!.uid
+        ? docs['friend_typing']
+            ? 'Typing...'
+            : ''
+        : docs['user_typing']
+            ? 'Typing...'
+            : '';
   }
 }

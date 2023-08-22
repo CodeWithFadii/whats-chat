@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -7,15 +8,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:watts_clone/consts/strings.dart';
 import 'package:watts_clone/controller/home_controller.dart';
 import 'package:watts_clone/controller/language_controller.dart';
-import 'package:watts_clone/main.dart';
 import 'package:watts_clone/screens/otherscreens/welcome_screen.dart';
 import 'package:watts_clone/screens/homescreen/profilescreen/profile_screen.dart';
 
 class DrawerWidget extends StatelessWidget {
-  DrawerWidget({super.key});
+  const DrawerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    print(user!.uid);
     final locale = AppLocalizations.of(context);
     return Drawer(
       backgroundColor: black,
@@ -28,7 +29,7 @@ class DrawerWidget extends StatelessWidget {
           return Column(
             children: [
               ListTile(
-                leading:  Icon(
+                leading: const Icon(
                   Icons.keyboard_return,
                   color: white,
                 ).onTap(
@@ -84,7 +85,6 @@ class DrawerWidget extends StatelessWidget {
                           .toList();
                     },
                     onSelected: (value) {
-                    
                       LanguageController.changeLanguage(value);
                     }),
                 //Language
@@ -94,12 +94,13 @@ class DrawerWidget extends StatelessWidget {
               const Spacer(),
               ListTile(
                 onTap: () async {
-                  await firebaseAuth.signOut();
+                  await FirebaseAuth.instance
+                      .signOut()
+                      .then((value) => Get.offAll(() => const WelcomeScreen()));
                   Get.rawSnackbar(
                       //logged out
                       message: locale.loggedout,
                       duration: const Duration(seconds: 4));
-                  Get.offAll(() => const WelcomeScreen());
                 },
                 leading: const Icon(Icons.logout, color: white),
                 //logout

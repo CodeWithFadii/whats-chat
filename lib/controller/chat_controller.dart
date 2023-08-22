@@ -11,6 +11,7 @@ class ChatController extends GetxController {
   var getChatIDloading = false.obs;
   var chats = firebaseFirestore.collection(collectionChats);
   RxString chatID = ''.obs;
+  RxBool isTyping = false.obs;
   String friendImage = '';
   User? currentUserID;
 
@@ -44,6 +45,7 @@ class ChatController extends GetxController {
                     userName: doc['username'],
                     friendToken: friendToken,
                     friendName: friendUserName,
+                    friendID: friendId,
                   ));
               getChatIDloading(false);
             } else {
@@ -63,10 +65,10 @@ class ChatController extends GetxController {
                   });
               getChatIDloading(false);
               Get.to(() => ChatScreen(
-                    userName: doc['username'],
-                    friendToken: friendToken,
-                    friendName: friendUserName,
-                  ));
+                  userName: doc['username'],
+                  friendToken: friendToken,
+                  friendName: friendUserName,
+                  friendID: friendId));
             }
           });
     } on Exception {
@@ -87,10 +89,12 @@ class ChatController extends GetxController {
   }
 
   getReminderMessages() {
-    return firebaseFirestore
-        .collection(collectionChats)
-        .doc(chatID.value)
-        .snapshots();
+    if (chatID.value.isNotEmpty) {
+      return firebaseFirestore
+          .collection(collectionChats)
+          .doc(chatID.value)
+          .snapshots();
+    }
   }
 
   handleTyping(DocumentSnapshot snapshot) {
@@ -104,13 +108,13 @@ class ChatController extends GetxController {
             : '';
   }
 
-  updateTyping() {
+  void updateTyping(bool typing) {
     if (chatID.value.isNotEmpty) {
-      return FirebaseFirestore.instance
+      FirebaseFirestore.instance
           .collection(collectionChats)
           .doc(chatID.value)
           .update(
-        {'user_typing': messageController.text.isNotEmpty ? true : false},
+        {'user_typing': typing},
       );
     }
   }

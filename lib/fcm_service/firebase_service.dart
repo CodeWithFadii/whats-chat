@@ -73,4 +73,6 @@ class FirebaseService {
   static Future<void> onBackgroundMsg() async {
     FirebaseMessaging.onBackgroundMessage(FCMProvider.backgroundHandler);
   }
+
+  
 }
