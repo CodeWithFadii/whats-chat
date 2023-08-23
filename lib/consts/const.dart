@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:watts_clone/consts/auth_const.dart';
 import 'app_theme.dart';
 
 List<String> listfeatures(AppLocalizations? locale) {
@@ -54,4 +51,3 @@ getInitialLanguage() async {
     Get.updateLocale(Locale(language));
   }
 }
-

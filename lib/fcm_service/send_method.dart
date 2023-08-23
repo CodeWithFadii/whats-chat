@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 class SendMethod {
-  static void sendNotification(String title, String body, String sentTo,
-      String friendName, String friendId) async {
+  static void sendNotification({required String title, required String body, required String sentTo,
+      required String friendName, required String friendId}) async {
     String url = 'https://fcm.googleapis.com/fcm/send';
     String serverKey =
         'AAAAxpUpLho:APA91bFXx2fyr4ZM6eXH3EPbr1fn372mmpc0hDr7j70w3yhaxcMSPq7CI-gxQEuT0DPUdUapdfyYCuZaZn-wCtk9O1pjePfTrmy0gV1FMcBv2IUDKXTi1NFcK-cVdb2zQdcOytM3XQW7';

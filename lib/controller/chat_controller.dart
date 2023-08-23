@@ -119,7 +119,8 @@ class ChatController extends GetxController {
     }
   }
 
-  sendMessage(String msg, String chatId) {
+  sendMessage(
+      {required String msg, required String chatId, required String friendId}) {
     if (msg.trim().isNotEmpty) {
       chats.doc(chatId).update({
         'createdAT': FieldValue.serverTimestamp(),
@@ -129,9 +130,14 @@ class ChatController extends GetxController {
         'createdAT': FieldValue.serverTimestamp(),
         'msg': msg,
         'uid': user!.uid,
+        friendId: false,
       }).then((value) {
         messageController.clear();
       });
     }
   }
+
+ 
+
+  
 }

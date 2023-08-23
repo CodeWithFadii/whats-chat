@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:watts_clone/consts/auth_const.dart';
+import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/controller/chat_controller.dart';
 import 'package:intl/intl.dart' as intl;
 
@@ -11,9 +12,9 @@ class ChatBubbleComponent extends StatelessWidget {
   ChatBubbleComponent({super.key, required this.docs});
   final DocumentSnapshot docs;
   final User? user = firebaseAuth.currentUser;
+  final chatC = Get.put(ChatController());
   @override
   Widget build(BuildContext context) {
-    var chatC = Get.put(ChatController());
     DateTime dateTime = docs['createdAT'] == null
         ? DateTime.parse(DateTime.now().toString())
         : DateTime.parse(docs['createdAT'].toDate().toString());

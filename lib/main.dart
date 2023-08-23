@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:watts_clone/consts/const.dart';
+import 'package:watts_clone/controller/chat_controller.dart';
+import 'package:watts_clone/fcm_service/fcm_provider.dart';
 import 'package:watts_clone/fcm_service/firebase_service.dart';
 import 'package:watts_clone/screens/otherscreens/splash_screen.dart';
 import 'consts/app_theme.dart';
@@ -32,9 +34,9 @@ class _MyAppState extends State<MyApp>   {
   void initState() {
     super.initState();
     getInitialLanguage();
-    // Get.put(ChatController());
-    // FCMProvider.navigateWhenBackground(context);
-    // FCMProvider.navigateWhenTerminated(widget.message, context);
+    Get.put(ChatController());
+    FCMProvider.navigateWhenBackground(context);
+    FCMProvider.navigateWhenTerminated(widget.message, context);
     // FCMProvider.getToken();
   }
 

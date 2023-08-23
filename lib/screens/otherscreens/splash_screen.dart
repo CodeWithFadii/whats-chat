@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:watts_clone/consts/auth_const.dart';
 import 'package:watts_clone/consts/const.dart';
 import 'package:watts_clone/screens/homescreen/home_screen.dart';
 import 'package:watts_clone/screens/otherscreens/welcome_screen.dart';

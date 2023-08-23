@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as intl;
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:watts_clone/consts/auth_const.dart';
@@ -173,15 +172,18 @@ class _ChatScreenState extends State<ChatScreen> {
                   GestureDetector(
                     onTap: () {
                       chatController.sendMessage(
-                          chatController.messageController.text,
-                          chatController.chatID.value);
+                        msg: chatController.messageController.text,
+                        chatId: chatController.chatID.value,
+                        friendId: widget.friendID,
+                      );
                       if (chatController.messageController.text.isNotEmpty) {
                         SendMethod.sendNotification(
-                            HomeController.instance.username.value,
-                            chatController.messageController.text,
-                            widget.friendToken,
-                            widget.userName,
-                            user!.uid);
+                          title: HomeController.instance.username.value,
+                          body: chatController.messageController.text,
+                          sentTo: widget.friendToken,
+                          friendName: widget.userName,
+                          friendId: user!.uid,
+                        );
                       }
                     },
                     child: const CircleAvatar(

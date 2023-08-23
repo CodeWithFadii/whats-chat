@@ -20,7 +20,6 @@ class AuthController extends GetxController {
 
   //sentOTP
   sentOTP(context) async {
-    print(countyCode);
     //phoneVerificationCompleted
     phoneVerificationCompleted(PhoneAuthCredential credential) async {
       print('Auto Verification Completed');
@@ -52,6 +51,9 @@ class AuthController extends GetxController {
     try {
       isloading(true);
       //verifyPhoneNumber
+
+      // Create a PhoneAuthOptions object.
+
       await FirebaseAuth.instance.verifyPhoneNumber(
           phoneNumber: '${countyCode.value}${phonenumberC.text}',
           verificationCompleted: phoneVerificationCompleted,
@@ -97,7 +99,6 @@ class AuthController extends GetxController {
 
       await firebaseAuth.signInWithCredential(phoneAuthCredential);
       //sending data to firebase
-
       Get.rawSnackbar(
           message: 'Logged In', duration: const Duration(seconds: 4));
       Get.offAll(() => HomeScreen(), transition: Transition.downToUp);
